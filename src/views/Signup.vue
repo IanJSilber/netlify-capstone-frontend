@@ -31,7 +31,7 @@
         </div>
         <input type="submit" value="Submit" />
         <br />
-        <router-link to="/login">Already have an account?</router-link>
+        <router-link to="/">Already have an account?</router-link>
       </form>
     </div>
   </div>
@@ -51,7 +51,7 @@ export default {
   methods: {
     submit: function () {
       axios
-        .post("http://localhost:3000/users", this.newUserParams)
+        .post("users", this.newUserParams)
         .then((response) => {
           console.log(response.data);
           this.$router.push("/login");

@@ -1,14 +1,13 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link>
+      <router-link to="/">Login</router-link>
       |
       <router-link to="/signup">Signup</router-link>
       |
-      <router-link to="/login">Login</router-link>
-    </div>
-    <div v-if="!isLoggedIn()" class="dropdown-item">
-      <router-link to="/Signup">Signup</router-link>
+      <router-link to="/positions">Positions</router-link>
+      |
+      <router-link to="/watchlists">Watchlists</router-link>
     </div>
     <router-view />
   </div>
@@ -46,11 +45,15 @@ export default {
       flashMessage: "",
     };
   },
+  created: function () {
+    this.isLoggedIn;
+  },
   methods: {
     isLoggedIn: function () {
       if (localStorage.getItem("jwt")) {
         return true;
       } else {
+        this.$router.push("/login");
         return false;
       }
     },
