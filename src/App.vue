@@ -1,13 +1,15 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Login</router-link>
-      |
-      <router-link to="/signup">Signup</router-link>
+      <router-link to="/">Home</router-link>
       |
       <router-link to="/positions">Positions</router-link>
       |
       <router-link to="/watchlists">Watchlists</router-link>
+      |
+      <router-link to="/login">Login</router-link>
+      |
+      <router-link to="/signup">Signup</router-link>
     </div>
     <router-view />
   </div>

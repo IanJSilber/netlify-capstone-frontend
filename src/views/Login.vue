@@ -26,7 +26,6 @@ import axios from "axios";
 export default {
   data: function () {
     return {
-      newUserParams: { password: "", password_confirmation: "" },
       errors: [],
       newSessionParams: {},
     };
