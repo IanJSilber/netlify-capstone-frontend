@@ -2,6 +2,7 @@
   <div class="Home">
     <div v-for="news in news" :key="news.id">
       <a target="_blank" v-bind:href="`${news.url}`">{{ news.title }}</a>
+      <p>{{ news.description }}</p>
       <br />
       <br />
       <br />
