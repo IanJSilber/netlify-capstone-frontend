@@ -1,38 +1,72 @@
 <template>
-  <div class="signup">
-    <div class="card">
-      <form v-on:submit.prevent="submit()">
-        <h1>Signup</h1>
-        <ul>
-          <li v-for="error in errors" v-bind:key="error">{{ error }}</li>
-        </ul>
-        <div>
-          <label>Name:</label>
-          <input type="text" v-model="newUserParams.name" />
+  <div class="container">
+    <div class="card o-hidden border-0 shadow-lg my-5">
+      <div class="card-body p-0">
+        <!-- Nested Row within Card Body -->
+        <div class="row">
+          <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
+          <div class="col-lg-7">
+            <div class="p-5">
+              <div class="text-center">
+                <h1 class="h4 text-gray-900 mb-4">Create an Account!</h1>
+              </div>
+              <form class="user" v-on:submit.prevent="submit()">
+                <ul>
+                  <li v-for="error in errors" v-bind:key="error">{{ error }}</li>
+                </ul>
+                <div class="form-group row">
+                  <div class="col-12">
+                    <input
+                      type="text"
+                      class="form-control form-control-user"
+                      id="exampleFirstName"
+                      placeholder="User Name"
+                      v-model="newUserParams.name"
+                    />
+                  </div>
+                </div>
+                <div class="form-group">
+                  <input
+                    type="email"
+                    class="form-control form-control-user"
+                    id="exampleInputEmail"
+                    placeholder="Email Address"
+                    v-model="newUserParams.email"
+                  />
+                </div>
+                <div class="form-group row">
+                  <div class="col-sm-6 mb-3 mb-sm-0">
+                    <input
+                      type="password"
+                      class="form-control form-control-user"
+                      id="exampleInputPassword"
+                      placeholder="Password"
+                      v-model="newUserParams.password"
+                    />
+                  </div>
+                  <div class="col-sm-6">
+                    <input
+                      type="password"
+                      class="form-control form-control-user"
+                      id="exampleRepeatPassword"
+                      placeholder="Repeat Password"
+                      v-model="newUserParams.password_confirmation"
+                    />
+                  </div>
+                </div>
+                <input class="btn btn-primary btn-user btn-block" type="submit" value="Submit" />
+              </form>
+              <hr />
+              <!-- <div class="text-center">
+                <a class="small" href="forgot-password.html">Forgot Password?</a>
+              </div> -->
+              <div class="text-center">
+                <router-link class="small" to="/login">Already have an account? Login!</router-link>
+              </div>
+            </div>
+          </div>
         </div>
-        <div>
-          <label>Email:</label>
-          <input type="text" v-model="newUserParams.email" />
-        </div>
-        <div>
-          <label>Password:</label>
-          <input type="password" v-model="newUserParams.password" maxlength="20" />
-          <small v-if="newUserParams.password.length == 20" class="text-danger">Max length is 20</small>
-          <small v-else-if="newUserParams.password.length < 6" class="text-danger">
-            Password must be at least 6 characters
-          </small>
-        </div>
-        <div>
-          <label>Password confirmation:</label>
-          <input type="password" v-model="newUserParams.password_confirmation" />
-          <small v-if="newUserParams.password !== newUserParams.password_confirmation" class="text-danger">
-            Password doesn't match
-          </small>
-        </div>
-        <input type="submit" value="Submit" />
-        <br />
-        <router-link to="/">Already have an account?</router-link>
-      </form>
+      </div>
     </div>
   </div>
 </template>
