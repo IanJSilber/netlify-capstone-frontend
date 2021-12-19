@@ -4,130 +4,11 @@
     <div id="content">
       <div class="positions">
         <!-- Topbar -->
-        <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
-          <!-- Sidebar Toggle (Topbar) -->
-          <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
-            <i class="fa fa-bars"></i>
-          </button>
-
-          <!-- Topbar Search -->
-          <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-            <div class="input-group">
-              <input
-                type="text"
-                class="form-control bg-light border-0 small"
-                placeholder="Search for..."
-                aria-label="Search"
-                aria-describedby="basic-addon2"
-              />
-              <div class="input-group-append">
-                <button class="btn btn-primary" type="button">
-                  <i class="fas fa-search fa-sm"></i>
-                </button>
-              </div>
-            </div>
-          </form>
-
-          <!-- Topbar Navbar -->
-          <ul class="navbar-nav ml-auto">
-            <!-- Nav Item - Search Dropdown (Visible Only XS) -->
-            <li class="nav-item dropdown no-arrow d-sm-none">
-              <a
-                class="nav-link dropdown-toggle"
-                href="#"
-                id="searchDropdown"
-                role="button"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                <i class="fas fa-search fa-fw"></i>
-              </a>
-              <!-- Dropdown - Messages -->
-              <div
-                class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
-                aria-labelledby="searchDropdown"
-              >
-                <form class="form-inline mr-auto w-100 navbar-search">
-                  <div class="input-group">
-                    <input
-                      type="text"
-                      class="form-control bg-light border-0 small"
-                      placeholder="Search for..."
-                      aria-label="Search"
-                      aria-describedby="basic-addon2"
-                    />
-                    <div class="input-group-append">
-                      <button class="btn btn-primary" type="button">
-                        <i class="fas fa-search fa-sm"></i>
-                      </button>
-                    </div>
-                  </div>
-                </form>
-              </div>
-            </li>
-
-            <div class="topbar-divider d-none d-sm-block"></div>
-
-            <!-- Nav Item - User Information -->
-            <li class="nav-item dropdown no-arrow">
-              <a
-                class="nav-link dropdown-toggle"
-                href="#"
-                id="userDropdown"
-                role="button"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-              >
-                <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ user.name }}</span>
-                <img class="img-profile rounded-circle" src="img/undraw_profile.svg" />
-              </a>
-              <!-- Dropdown - User Information -->
-              <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in" aria-labelledby="userDropdown">
-                <a class="dropdown-item" href="#" data-toggle="modal" data-target="#signoutModal">
-                  <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
-                  Logout
-                </a>
-              </div>
-              <div
-                class="modal fade"
-                id="signoutModal"
-                tabindex="-1"
-                role="dialog"
-                aria-labelledby="exampleModalLabel"
-                aria-hidden="true"
-              >
-                <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-                      <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">x</span>
-                      </button>
-                    </div>
-                    <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-                    <div class="modal-footer">
-                      <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                      <button class="btn btn-primary" data-dismiss="modal" v-on:click="logout()">Logout</button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </li>
-          </ul>
-        </nav>
-        <!-- End of Topbar -->
         <!-- Begin Page Content -->
         <div class="container-fluid">
           <!-- DataTales Example -->
-          <h1 class="h3 mb-2 text-gray-800">Tables</h1>
-          <p class="mb-4">
-            DataTables is a third party plugin that is used to generate the demo table below. For more information about
-            DataTables, please visit the
-            <a target="_blank" href="https://datatables.net">official DataTables documentation</a>
-            .
-          </p>
+          <h1 class="h3 mb-2 text-gray-800">Portfolio status: not good</h1>
+          <p class="mb-4">Oops looks like all your positions are underwater!</p>
           <div class="col-xl-3 col-md-6 mb-4">
             <div class="card border-left-primary shadow h-100 py-2">
               <div class="card-body">
@@ -176,6 +57,7 @@
                                 <input
                                   type="text"
                                   class="form-control form-control-user"
+                                  placeholder="Amount"
                                   v-model="newPositionParams.amount"
                                 />
                               </div>
@@ -208,9 +90,11 @@
                       <tr>
                         <th>Asset</th>
                         <th>Quantity</th>
+                        <th>Purchase Price</th>
                         <th>Price</th>
                         <th>Position Value</th>
-                        <th>Percent Change %</th>
+                        <th>% PnL</th>
+                        <th>24hr % Change</th>
                       </tr>
                     </thead>
 
@@ -218,14 +102,22 @@
                       <td>
                         {{ position.asset }}
                         <br />
-                        <button class="btn btn-success btn-icon-split" v-on:click="showPosition(position)">
+                        <button
+                          class="btn btn-success btn-icon-split"
+                          href="#"
+                          data-toggle="modal"
+                          data-target="#editModal"
+                          v-on:click="showPosition(position)"
+                        >
                           Edit position
                         </button>
                       </td>
                       <td>{{ position.amount }}</td>
-                      <td>${{ position.price }}</td>
-                      <td>${{ position.position_value }}</td>
-                      <td>%{{ position.percent_change }}</td>
+                      <td>${{ Intl.NumberFormat("en-US").format(position.purchase_price) }}</td>
+                      <td>${{ Intl.NumberFormat("en-US").format(position.price) }}</td>
+                      <td>${{ Intl.NumberFormat("en-US").format(position.position_value) }}</td>
+                      <td>{{ ((position.price - position.purchase_price) / position.purchase_price) * 100 }}%</td>
+                      <td>{{ position.percent_change }}%</td>
                     </tr>
                   </table>
                 </div>
@@ -239,7 +131,7 @@
         <a class="scroll-to-top rounded" href="#page-top">
           <i class="fas fa-angle-up"></i>
         </a>
-        <dialog id="position-details">
+        <!-- <dialog id="position-details">
           <form class="user">
             <p>
               Name:
@@ -253,21 +145,63 @@
             <button v-on:click="destroyPosition(currentPosition)">Delete</button>
             <button>Close</button>
           </form>
-        </dialog>
+        </dialog> -->
+        <div class="row no-gutters align-items-center">
+          <div
+            class="modal fade"
+            id="editModal"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Edit your position!</h5>
+                  <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">x</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  <form class="user">
+                    <div class="modal-body">
+                      <ul>
+                        <li v-for="error in errors" v-bind:key="error">{{ error }}</li>
+                      </ul>
+                      <div class="form-group">
+                        <input
+                          type="text"
+                          class="form-control form-control-user"
+                          placeholder="Amount"
+                          v-model="currentPosition.amount"
+                        />
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button
+                        class="btn btn-danger"
+                        type="button"
+                        data-dismiss="modal"
+                        v-on:click="destroyPosition(currentPosition)"
+                      >
+                        Delete
+                      </button>
+                      <button class="btn btn-primary" data-dismiss="modal" v-on:click="updatePosition(currentPosition)">
+                        Update
+                      </button>
+                      <button class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <!-- /.container-fluid -->
     </div>
     <!-- End of Main Content -->
-
-    <!-- Footer -->
-    <footer class="sticky-footer bg-white">
-      <div class="container my-auto">
-        <div class="copyright text-center my-auto">
-          <span>Copyright &copy; CryptoGRAPHer 2021</span>
-        </div>
-      </div>
-    </footer>
-    <!-- End of Footer -->
   </div>
 </template>
 
@@ -281,7 +215,7 @@ export default {
       errors: [],
       user: {},
       currentPosition: {},
-      newPositionParams: { asset: "", amount: 0 },
+      newPositionParams: { asset: "", amount: "" },
       totalValue: 0,
     };
   },
@@ -295,6 +229,9 @@ export default {
         .get("positions")
         .then((response) => {
           this.positions = response.data;
+          for (let i = 0; i < this.positions.length; ++i) {
+            this.totalValue += parseInt(this.positions[i].price);
+          }
           console.log("Successfully indexed positions!", this.positions);
         })
         .catch((error) => console.log(error.response));
@@ -308,7 +245,6 @@ export default {
     showPosition: function (position) {
       console.log(position);
       this.currentPosition = position;
-      document.querySelector("#position-details").showModal();
     },
     updatePosition: function (position) {
       axios.patch("http://localhost:3000/positions/" + position.id, position).then((response) => {
@@ -326,16 +262,11 @@ export default {
         });
     },
     destroyPosition: function (position) {
-      axios.delete("http://localhost:3000/positions/" + position.id).then((response) => {
+      axios.delete("positions/" + position.id).then((response) => {
         console.log("Sucess!", response.data);
         var index = this.positions.indexOf(position);
         this.positions.splice(index, 1);
       });
-    },
-    logout: function () {
-      delete axios.defaults.headers.common["Authorization"];
-      localStorage.removeItem("jwt");
-      this.$router.push("/");
     },
   },
 };

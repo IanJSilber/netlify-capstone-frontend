@@ -1,24 +1,51 @@
 <template>
-  <div id="watchlist-show">
-    <h1>{{ currentWatchlist.name }}</h1>
-    <div v-for="asset in assets" :key="asset.id">
-      <h3>======================</h3>
-      <h3>Asset: {{ asset.name }}</h3>
-      <h3>Price: {{ asset.price }}</h3>
-      <button v-on:click="showAsset(asset)">Edit asset</button>
+  <div id="content-wrapper" class="d-flex flex-column">
+    <!-- Main Content -->
+    <div id="content">
+      <div id="watchlist-show">
+        <div class="container-fluid">
+          <h1 class="h3 mb-2 text-gray-800">Hows it looking?</h1>
+          <p class="mb-4">Any buying opportunities out there?</p>
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">{{ currentWatchlist.name }}</h6>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                <div v-if="$parent.isLoggedIn()">
+                  <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                      <tr>
+                        <th>Symbol</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>1hr % Change</th>
+                        <th>24hr % Change</th>
+                        <th>7d % Change</th>
+                        <th>30d % Change</th>
+                      </tr>
+                    </thead>
+
+                    <tr v-for="asset in assets" :key="asset.id">
+                      <td>
+                        {{ asset.symbol }}
+                        <button class="btn btn-danger btn-icon-split" v-on:click="destroyAsset(asset)">Remove</button>
+                      </td>
+                      <td>{{ asset.name }}</td>
+                      <td>${{ asset.price }}</td>
+                      <td>{{ asset.percent_change_1hr }}%</td>
+                      <td>{{ asset.percent_change_24hr }}%</td>
+                      <td>{{ asset.percent_change_7d }}%</td>
+                      <td>{{ asset.percent_change_30d }}%</td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-    <dialog id="asset-details">
-      <form method="dialog">
-        <p>
-          Name:
-          <input type="text" v-model="currentAsset.name" />
-        </p>
-        <button v-on:click="updatePosition(currentPosition)">Update</button>
-        <button v-on:click="destroyPosition(currentPosition)">Delete</button>
-        <button>Close</button>
-      </form>
-    </dialog>
-    <h3>======================</h3>
   </div>
 </template>
 
@@ -34,28 +61,29 @@ export default {
     };
   },
   created: function () {
-    axios.get("watchlists/" + this.$route.params.id).then((response) => {
-      this.currentWatchlist = response.data;
-      console.log("success!", response.data);
-    });
-    axios.get("assets/" + this.$route.params.id).then((response) => {
-      this.assets = response.data;
-      console.log("success!", response.data);
-    });
+    this.indexAssets();
+    this.showWatchlist();
   },
   methods: {
+    indexAssets: function () {
+      axios.get("assets/" + this.$route.params.id).then((response) => {
+        this.assets = response.data;
+        console.log("success -assets!", response.data);
+      });
+    },
+    showWatchlist: function () {
+      axios.get("watchlists/" + this.$route.params.id).then((response) => {
+        this.currentWatchlist = response.data;
+        console.log("success -watchlist!", response.data);
+      });
+    },
     showAsset: function (asset) {
       console.log(asset);
       this.currentAsset = asset;
       document.querySelector("#asset-details").showModal();
     },
-    updateAsset: function (asset) {
-      axios.patch("http://localhost:3000/assets/" + asset.id, asset).then((response) => {
-        console.log("success", response.data);
-      });
-    },
     destroyAsset: function (asset) {
-      axios.delete("http://localhost:3000/assets/" + asset.id).then((response) => {
+      axios.delete("assets/" + asset.id).then((response) => {
         console.log("Sucess!", response.data);
         var index = this.assets.indexOf(asset);
         this.assets.splice(index, 1);
