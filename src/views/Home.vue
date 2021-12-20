@@ -26,7 +26,7 @@
                     <td>{{ coin.rank }}</td>
                     <td>{{ coin.name }}</td>
                     <td>{{ coin.symbol }}</td>
-                    <td>${{ coin.price }}</td>
+                    <td>${{ Intl.NumberFormat("en-US").format(coin.price) }}</td>
                     <td>%{{ coin.percent_change_24hr }}</td>
                     <td>%{{ coin.percent_change_7d }}</td>
                     <td>%{{ coin.percent_change_30d }}</td>

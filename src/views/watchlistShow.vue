@@ -17,7 +17,6 @@
                     <thead>
                       <tr>
                         <th>Symbol</th>
-                        <th>Name</th>
                         <th>Price</th>
                         <th>1hr % Change</th>
                         <th>24hr % Change</th>
@@ -31,10 +30,9 @@
                         {{ asset.symbol }}
                         <button class="btn btn-danger btn-icon-split" v-on:click="destroyAsset(asset)">Remove</button>
                       </td>
-                      <td>{{ asset.name }}</td>
-                      <td>${{ asset.price }}</td>
-                      <td>{{ asset.percent_change_1hr }}%</td>
-                      <td>{{ asset.percent_change_24hr }}%</td>
+                      <td>${{ Intl.NumberFormat("en-US").format(asset.price) }}</td>
+                      <td>{{ asset.percent_change_1h }}%</td>
+                      <td>{{ asset.percent_change_24h }}%</td>
                       <td>{{ asset.percent_change_7d }}%</td>
                       <td>{{ asset.percent_change_30d }}%</td>
                     </tr>

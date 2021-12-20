@@ -4,7 +4,10 @@
       <div class="card-body p-0">
         <!-- Nested Row within Card Body -->
         <div class="row">
-          <div class="col-lg-5 d-none d-lg-block bg-register-image"></div>
+          <img
+            class="col-lg-5 d-none d-lg-block"
+            src="https://cdn.pixabay.com/photo/2021/04/30/16/46/bitcoin-icon-6219383_960_720.png"
+          />
           <div class="col-lg-7">
             <div class="p-5">
               <div class="text-center">

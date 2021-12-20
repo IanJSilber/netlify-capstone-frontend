@@ -4,61 +4,55 @@
     <div id="content">
       <div class="watchlists">
         <div class="container-fluid">
+          <div class="col-auto" href="#" data-toggle="modal" data-target="#createModal">
+            <a class="btn btn-success btn-icon-split">
+              <span class="icon text-white-50">
+                <i class="fas fa-check"></i>
+              </span>
+              <span class="text">Create Watchlist</span>
+            </a>
+          </div>
           <div class="col-xl-3 col-md-6 mb-4">
-            <div class="card border-left-primary shadow h-100 py-2">
-              <div class="card-body">
-                <div class="row no-gutters align-items-center">
-                  <div class="col mr-2">
-                    <div class="text-m font-weight-bold text-primary text-uppercase mb-1">Add a Watchlist!</div>
+            <div
+              class="modal fade"
+              id="createModal"
+              tabindex="-1"
+              role="dialog"
+              aria-labelledby="exampleModalLabel"
+              aria-hidden="true"
+            >
+              <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Create a new Watchlist!</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                      <span aria-hidden="true">x</span>
+                    </button>
                   </div>
-                  <div class="col-auto" href="#" data-toggle="modal" data-target="#createModal">
-                    <i role="button" class="fas fa-plus-circle fa-2x"></i>
-                  </div>
-                  <div
-                    class="modal fade"
-                    id="createModal"
-                    tabindex="-1"
-                    role="dialog"
-                    aria-labelledby="exampleModalLabel"
-                    aria-hidden="true"
-                  >
-                    <div class="modal-dialog" role="document">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <h5 class="modal-title" id="exampleModalLabel">Create a new Watchlist!</h5>
-                          <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">x</span>
-                          </button>
-                        </div>
-                        <div class="modal-body">
-                          Enter a name for your new Watchlist
-                          <hr />
-                          <form class="user">
-                            <div class="modal-body">
-                              <ul>
-                                <li v-for="error in errors" v-bind:key="error">{{ error }}</li>
-                              </ul>
-                              <div class="form-group row">
-                                <div class="col-12">
-                                  <input
-                                    type="text"
-                                    class="form-control form-control-user"
-                                    placeholder="Enter name here"
-                                    v-model="newWatchlistParams.name"
-                                  />
-                                </div>
-                              </div>
-                            </div>
-                            <div class="modal-footer">
-                              <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                              <button class="btn btn-primary" data-dismiss="modal" v-on:click="createWatchlist()">
-                                Add
-                              </button>
-                            </div>
-                          </form>
+                  <div class="modal-body">
+                    Enter a name for your new Watchlist
+                    <hr />
+                    <form class="user">
+                      <div class="modal-body">
+                        <ul>
+                          <li v-for="error in errors" v-bind:key="error">{{ error }}</li>
+                        </ul>
+                        <div class="form-group row">
+                          <div class="col-12">
+                            <input
+                              type="text"
+                              class="form-control form-control-user"
+                              placeholder="Enter name here"
+                              v-model="newWatchlistParams.name"
+                            />
+                          </div>
                         </div>
                       </div>
-                    </div>
+                      <div class="modal-footer">
+                        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                        <button class="btn btn-primary" data-dismiss="modal" v-on:click="createWatchlist()">Add</button>
+                      </div>
+                    </form>
                   </div>
                 </div>
               </div>
@@ -73,6 +67,14 @@
                 <div v-for="watchlist in watchlists" :key="watchlist.id">
                   <div class="card shadow mb-4">
                     <div class="card-header py-3">
+                      <a
+                        style="text-align: right"
+                        class="btn btn-danger"
+                        href="#"
+                        v-on:click="destroyWatchlist(watchlist)"
+                      >
+                        <span class="icon text-white-50"><i class="fas fa-times"></i></span>
+                      </a>
                       <router-link v-bind:to="`/watchlists/${watchlist.id}`" style="font-size: 32px">
                         {{ watchlist.name }}
                       </router-link>
@@ -132,6 +134,13 @@ export default {
           console.log("success", response.data);
         })
         .catch((error) => console.log(error.response));
+    },
+    destroyWatchlist: function (watchlist) {
+      axios.delete("watchlists/" + watchlist.id).then((response) => {
+        console.log("Sucess!", response.data);
+        var index = this.watchlists.indexOf(watchlist);
+        this.watchlists.splice(index, 1);
+      });
     },
   },
 };
