@@ -4,11 +4,28 @@
     <div id="content">
       <div id="watchlist-show">
         <div class="container-fluid">
+          <router-link to="/watchlists">back</router-link>
           <h1 class="h3 mb-2 text-gray-800">Hows it looking?</h1>
           <p class="mb-4">Any buying opportunities out there?</p>
           <div class="card shadow mb-4">
             <div class="card-header py-3">
-              <h6 class="m-0 font-weight-bold text-primary">{{ currentWatchlist.name }}</h6>
+              <div class="text-m font-weight-bold text-primary text-uppercase mb-1">
+                <h4 class="m-0 font-weight-bold text-primary">{{ currentWatchlist.name }}</h4>
+              </div>
+            </div>
+          </div>
+          <div class="card shadow mb-4">
+            <div class="card-header py-3">
+              <h6 class="m-0 font-weight-bold text-primary">
+                <div class="col-auto" href="#" data-toggle="modal" data-target="#createModal">
+                  <a class="btn btn-success btn-icon-split">
+                    <span class="icon text-white-50">
+                      <i class="fas fa-check"></i>
+                    </span>
+                    <span class="text">Add a new Asset</span>
+                  </a>
+                </div>
+              </h6>
             </div>
             <div class="card-body">
               <div class="table-responsive">
@@ -41,6 +58,52 @@
               </div>
             </div>
           </div>
+          <div
+            class="modal fade"
+            id="createModal"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+          >
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="exampleModalLabel">Add something to watch!</h5>
+                  <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">x</span>
+                  </button>
+                </div>
+                <div class="modal-body">
+                  Input the symbol below to start tracking
+                  <hr />
+                  <form class="user">
+                    <div class="modal-body">
+                      <ul>
+                        <li v-for="error in errors" v-bind:key="error">{{ error }}</li>
+                      </ul>
+                      <div class="form-group row">
+                        <div class="col-12">
+                          <input
+                            type="text"
+                            class="form-control form-control-user"
+                            placeholder="Symbol"
+                            v-model="newAssetParams.symbol"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                    <div class="modal-footer">
+                      <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                      <button class="btn btn-primary" data-dismiss="modal" v-on:click="createAsset(), reloadPage()">
+                        Add
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -53,9 +116,11 @@ import axios from "axios";
 export default {
   data: function () {
     return {
+      newAssetParams: { symbol: "", watchlist_id: this.$route.params.id },
       currentWatchlist: {},
       currentAsset: {},
       assets: [],
+      errors: [],
     };
   },
   created: function () {
@@ -79,6 +144,16 @@ export default {
       console.log(asset);
       this.currentAsset = asset;
       document.querySelector("#asset-details").showModal();
+    },
+    createAsset: function () {
+      axios
+        .post("assets", this.newAssetParams)
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((error) => {
+          this.errors = error.response.data.errors;
+        });
     },
     destroyAsset: function (asset) {
       axios.delete("assets/" + asset.id).then((response) => {

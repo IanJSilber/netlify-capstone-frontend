@@ -32,11 +32,12 @@
                   </div>
                 </div>
                 <div class="card-body">
-                  <h3>Line Chart Example in Vue</h3>
+                  <h3>Portfolio perfomance over the past 30 days</h3>
                   <line-chart></line-chart>
 
                   <hr />
-                  Price performance over the past 24 hours.
+                  <div v-if="this.totalPnl30Days > this.totalValue">Yikes, looks rough</div>
+                  <div v-if="this.totalPnl30Days < this.totalValue">Nice!</div>
                 </div>
               </div>
             </div>
@@ -254,6 +255,7 @@ export default {
       lambo: 517770,
       totalLamboValue: 0,
       lamboPnL: 0,
+      totalPnl30Days: 0.0,
     };
   },
   created: function () {
@@ -272,7 +274,9 @@ export default {
           for (let i = 0; i < this.positions.length; ++i) {
             this.totalValue += this.positions[i].position_value;
             this.totalPnL += this.positions[i].pnl_dollars;
+            this.totalPnl30Days += this.positions[i].pnl_30_days;
           }
+          this.totalPnl30Days += this.totalValue;
           this.totalLamboValue = parseFloat(this.totalValue / this.lambo).toFixed(2);
           this.lamboPnL = parseFloat(this.totalPnL / this.lambo).toFixed(5);
           console.log("Successfully indexed positions!", this.positions);

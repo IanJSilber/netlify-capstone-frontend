@@ -75,8 +75,11 @@
                       >
                         <span class="icon text-white-50"><i class="fas fa-times"></i></span>
                       </a>
-                      <router-link v-bind:to="`/watchlists/${watchlist.id}`" style="font-size: 32px">
-                        {{ watchlist.name }}
+                      <router-link v-bind:to="`/watchlists/${watchlist.id}`" class="btn btn-success btn-icon-split">
+                        <span class="icon text-white-50">
+                          <i class="fas fa-check"></i>
+                        </span>
+                        <span class="text">{{ watchlist.name }}</span>
                       </router-link>
                     </div>
                   </div>

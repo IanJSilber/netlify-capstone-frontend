@@ -159,7 +159,14 @@
                         </div>
                         <div class="modal-footer">
                           <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                          <button class="btn btn-primary" data-dismiss="modal" v-on:click="logout()">Logout</button>
+                          <button
+                            class="btn btn-primary"
+                            type="button"
+                            data-dismiss="modal"
+                            v-on:click="logout(), reloadPage()"
+                          >
+                            Logout
+                          </button>
                         </div>
                       </div>
                     </div>
@@ -232,6 +239,9 @@ export default {
     this.isLoggedIn;
   },
   methods: {
+    reloadPage() {
+      window.location.reload();
+    },
     isNavbarLoggedIn: function () {
       if (localStorage.getItem("jwt")) {
         return true;
