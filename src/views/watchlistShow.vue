@@ -7,6 +7,22 @@
           <router-link to="/watchlists">back</router-link>
           <h1 class="h3 mb-2 text-gray-800">Hows it looking?</h1>
           <p class="mb-4">Any buying opportunities out there?</p>
+
+          <div class="row">
+            <div class="col-xl-12 col-md-6 mb-4">
+              <div class="card shadow mb-4">
+                <div class="card-header py-3">
+                  <div class="text-m font-weight-bold text-primary text-uppercase mb-1">
+                    <h4 class="m-0 font-weight-bold text-primary">{{ currentAsset.symbol }}</h4>
+                  </div>
+                </div>
+                <div class="card-body">
+                  <h3>{{ currentAsset.symbol }} performance over 30 days</h3>
+                  <watchlist-line-chart></watchlist-line-chart>
+                </div>
+              </div>
+            </div>
+          </div>
           <div class="card shadow mb-4">
             <div class="card-header py-3">
               <div class="text-m font-weight-bold text-primary text-uppercase mb-1">
@@ -45,7 +61,20 @@
                     <tr v-for="asset in assets" :key="asset.id">
                       <td>
                         {{ asset.symbol }}
-                        <button class="btn btn-danger btn-icon-split" v-on:click="destroyAsset(asset)">Remove</button>
+                        <button
+                          class="btn btn-danger btn-icon-split"
+                          style="margin-left: 10px; padding: 5px"
+                          v-on:click="destroyAsset(asset)"
+                        >
+                          Remove
+                        </button>
+                        <button
+                          class="btn btn-success btn-icon-split"
+                          style="margin-left: 10px; padding: 5px"
+                          v-on:click="showAsset(asset)"
+                        >
+                          Chart
+                        </button>
                       </td>
                       <td>${{ Intl.NumberFormat("en-US").format(asset.price) }}</td>
                       <td>{{ asset.percent_change_1h }}%</td>
@@ -112,8 +141,12 @@
 
 <script>
 import axios from "axios";
+import WatchlistLineChart from "@/components/WatchlistLineChart";
 
 export default {
+  components: {
+    WatchlistLineChart,
+  },
   data: function () {
     return {
       newAssetParams: { symbol: "", watchlist_id: this.$route.params.id },
@@ -143,7 +176,6 @@ export default {
     showAsset: function (asset) {
       console.log(asset);
       this.currentAsset = asset;
-      document.querySelector("#asset-details").showModal();
     },
     createAsset: function () {
       axios

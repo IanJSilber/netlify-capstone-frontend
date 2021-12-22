@@ -113,7 +113,7 @@
                 </div>
               </li>
               <div class="topbar-divider d-none d-sm-block"></div>
-              <div v-if="isNavbarLoggedIn()">
+              <div v-if="isNavbarLoggedIn()" v-on="indexUser()">
                 <!-- Nav Item - User Information -->
                 <li class="nav-item dropdown no-arrow">
                   <a
@@ -126,6 +126,7 @@
                     aria-expanded="false"
                   >
                     <span class="mr-2 d-none d-lg-inline text-gray-600 small"></span>
+                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ this.currentUserName }}</span>
                     <img class="img-profile rounded-circle" src="img/undraw_profile.svg" />
                   </a>
                   <!-- Dropdown - User Information -->
@@ -194,11 +195,11 @@
                     aria-labelledby="userDropdown"
                   >
                     <router-link class="dropdown-item" to="/login">
-                      <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                      <i class="fas fa-sign-in-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                       Login
                     </router-link>
                     <router-link class="dropdown-item" to="/signup">
-                      <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
+                      <i class="fas fa-user-plus fa-sm fa-fw mr-2 text-gray-400"></i>
                       Signup
                     </router-link>
                   </div>
@@ -233,14 +234,18 @@ export default {
   data: function () {
     return {
       flashMessage: "",
+      currentUserName: {},
     };
-  },
-  created: function () {
-    this.isLoggedIn;
   },
   methods: {
     reloadPage() {
       window.location.reload();
+    },
+    indexUser() {
+      axios.get("users").then((response) => {
+        console.log("success name", response.data);
+        this.currentUserName = response.data.name;
+      });
     },
     isNavbarLoggedIn: function () {
       if (localStorage.getItem("jwt")) {

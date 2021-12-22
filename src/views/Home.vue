@@ -4,8 +4,57 @@
     <div id="content">
       <div class="home">
         <div class="container-fluid">
+          <h1 class="h1 mb-2 text-gray-800">Dashboard</h1>
+          <h1 class="h6 mb-2 text-gray-800">Whats going on in the world of crypto</h1>
+          <hr />
+          <h1 class="h3 mb-2 text-gray-800">Top 3 Movers</h1>
+          <div class="row">
+            <div class="col-xl-4 col-lg-5">
+              <div class="card shadow mb-4">
+                <div class="card-header py-3" style="background-color: #ffd700">
+                  <h6 class="m-0 font-weight-bold" style="color: white">1st Mover</h6>
+                </div>
+                <div class="card-body">
+                  <h3>{{ this.coinOne.name }}</h3>
+                  <h3>{{ this.coinOne.percent_change_24h }}%</h3>
+                  <hr />
+                  <p>rank: {{ this.coinOne.rank }}</p>
+                  <p>price: ${{ this.coinOne.price }}</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-4 col-lg-5">
+              <div class="card shadow mb-4">
+                <div class="card-header py-3" style="background-color: #c0c0c0">
+                  <h6 class="m-0 font-weight-bold" style="color: white">2nd Mover</h6>
+                </div>
+                <div class="card-body">
+                  <h3>{{ this.coinTwo.name }}</h3>
+                  <h3>{{ this.coinTwo.percent_change_24h }}%</h3>
+                  <hr />
+                  <p>rank: {{ this.coinTwo.rank }}</p>
+                  <p>price: ${{ this.coinTwo.price }}</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-xl-4 col-lg-5">
+              <div class="card shadow mb-4">
+                <div class="card-header py-3" style="background-color: #cd7f32">
+                  <h6 class="m-0 font-weight-bold" style="color: white">3rd Mover</h6>
+                </div>
+                <div class="card-body">
+                  <h3>{{ this.coinThree.name }}</h3>
+                  <h3>{{ this.coinThree.percent_change_24h }}%</h3>
+                  <hr />
+                  <p>rank: {{ this.coinThree.rank }}</p>
+                  <p>price: ${{ this.coinThree.price }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
           <h1 class="h3 mb-2 text-gray-800">Top 15 cryptocurrencies</h1>
           <p class="mb-4">Top ranked cryptocurrencies by market capitalization.</p>
+
           <div class="card shadow mb-4">
             <div class="card-body">
               <div class="table-responsive">
@@ -27,7 +76,7 @@
                     <td>{{ coin.name }}</td>
                     <td>{{ coin.symbol }}</td>
                     <td>${{ Intl.NumberFormat("en-US").format(coin.price) }}</td>
-                    <td>%{{ coin.percent_change_24hr }}</td>
+                    <td>%{{ coin.percent_change_24h }}</td>
                     <td>%{{ coin.percent_change_7d }}</td>
                     <td>%{{ coin.percent_change_30d }}</td>
                   </tr>
@@ -63,16 +112,42 @@ export default {
     return {
       news: [],
       coins: [],
+      coinOne: { percent_change_24h: 0 },
+      coinTwo: { percent_change_24h: 0 },
+      coinThree: { percent_change_24h: 0 },
     };
   },
   created: function () {
     axios.get("news").then((response) => {
       console.log("success", response.data);
-      this.news = response.data.articles;
+      for (let i = 0; i < 5; ++i) {
+        this.news.push(response.data.articles[i]);
+      }
     });
     axios.get("top-coins").then((response) => {
       console.log("success", response.data);
       this.coins = response.data;
+      this.coins.forEach((coin) => {
+        if (coin.percent_change_24h > this.coinOne.percent_change_24h) {
+          this.coinOne = coin;
+        }
+      });
+      this.coins.forEach((coin) => {
+        if (
+          coin.percent_change_24h > this.coinTwo.percent_change_24h &&
+          coin.percent_change_24h < this.coinOne.percent_change_24h
+        ) {
+          this.coinTwo = coin;
+        }
+      });
+      this.coins.forEach((coin) => {
+        if (
+          coin.percent_change_24h > this.coinThree.percent_change_24h &&
+          coin.percent_change_24h < this.coinTwo.percent_change_24h
+        ) {
+          this.coinThree = coin;
+        }
+      });
     });
   },
 };
