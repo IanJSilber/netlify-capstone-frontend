@@ -11,14 +11,21 @@
           <div class="row">
             <div class="col-xl-12 col-md-6 mb-4">
               <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                  <div class="text-m font-weight-bold text-primary text-uppercase mb-1">
-                    <h4 class="m-0 font-weight-bold text-primary">{{ currentAsset.symbol }}</h4>
+                <div v-if="!currentAsset">
+                  <div class="card-header py-3">
+                    <h3>Pick an asset to chart!</h3>
+                  </div>
+                  <div class="card-body">
+                    <h1 class="h3 mb-2 text-gray-800" style="text-align: center">Nothing to see here...</h1>
                   </div>
                 </div>
-                <div class="card-body">
-                  <h3>{{ currentAsset.symbol }} performance over 30 days</h3>
-                  <watchlist-line-chart></watchlist-line-chart>
+                <div v-if="currentAsset">
+                  <div class="card-header py-3">
+                    <h3>{{ currentAsset.symbol }} Performance over 30 days</h3>
+                  </div>
+                  <div class="card-body">
+                    <watchlist-line-chart></watchlist-line-chart>
+                  </div>
                 </div>
               </div>
             </div>
@@ -151,7 +158,7 @@ export default {
     return {
       newAssetParams: { symbol: "", watchlist_id: this.$route.params.id },
       currentWatchlist: {},
-      currentAsset: {},
+      currentAsset: false,
       assets: [],
       errors: [],
     };
@@ -161,6 +168,9 @@ export default {
     this.showWatchlist();
   },
   methods: {
+    reloadPage: function () {
+      window.location.reload();
+    },
     indexAssets: function () {
       axios.get("assets/" + this.$route.params.id).then((response) => {
         this.assets = response.data;

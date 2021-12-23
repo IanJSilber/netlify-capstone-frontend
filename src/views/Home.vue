@@ -128,22 +128,22 @@ export default {
       console.log("success", response.data);
       this.coins = response.data;
       this.coins.forEach((coin) => {
-        if (coin.percent_change_24h > this.coinOne.percent_change_24h) {
+        if (Math.abs(coin.percent_change_24h) > Math.abs(this.coinOne.percent_change_24h)) {
           this.coinOne = coin;
         }
       });
       this.coins.forEach((coin) => {
         if (
-          coin.percent_change_24h > this.coinTwo.percent_change_24h &&
-          coin.percent_change_24h < this.coinOne.percent_change_24h
+          Math.abs(coin.percent_change_24h) > Math.abs(this.coinTwo.percent_change_24h) &&
+          Math.abs(coin.percent_change_24h) < Math.abs(this.coinOne.percent_change_24h)
         ) {
           this.coinTwo = coin;
         }
       });
       this.coins.forEach((coin) => {
         if (
-          coin.percent_change_24h > this.coinThree.percent_change_24h &&
-          coin.percent_change_24h < this.coinTwo.percent_change_24h
+          Math.abs(coin.percent_change_24h) > Math.abs(this.coinThree.percent_change_24h) &&
+          Math.abs(coin.percent_change_24h) < Math.abs(this.coinTwo.percent_change_24h)
         ) {
           this.coinThree = coin;
         }

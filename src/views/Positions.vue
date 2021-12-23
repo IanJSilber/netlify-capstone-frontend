@@ -35,7 +35,6 @@
                   <h3>Portfolio perfomance over the past 30 days</h3>
                   <line-chart></line-chart>
 
-                  <hr />
                   <div v-if="this.totalPnl30Days > this.totalValue">Yikes, looks rough</div>
                   <div v-if="this.totalPnl30Days < this.totalValue">Nice!</div>
                 </div>
@@ -138,7 +137,8 @@
                 </button>
               </div>
               <div class="modal-body">
-                Input the symbol and amount below to add a position to your portfolio
+                Input the symbol and amount below to add a position to your portfolio (leave purchase price blank for
+                current price)
                 <hr />
                 <form class="user">
                   <div class="modal-body">
@@ -213,6 +213,7 @@
                       </button>
                       <button
                         class="btn btn-primary"
+                        type="button"
                         data-dismiss="modal"
                         v-on:click="updatePosition(currentPosition), reloadPage()"
                       >
@@ -260,12 +261,8 @@ export default {
   },
   created: function () {
     this.indexPositions();
-    this.showUsers();
   },
   methods: {
-    reloadPage() {
-      window.location.reload();
-    },
     indexPositions: function () {
       axios
         .get("positions")
@@ -283,20 +280,19 @@ export default {
         })
         .catch((error) => console.log(error.response));
     },
-    showUsers: function () {
-      axios.get("users").then((response) => {
-        this.user = response.data;
-        console.log("success", response.data);
-      });
+    reloadPage: function () {
+      window.location.reload();
     },
     showPosition: function (position) {
       console.log(position);
       this.currentPosition = position;
     },
-    updatePosition: function (position) {
-      axios.patch("http://localhost:3000/positions/" + position.id, position).then((response) => {
-        console.log("success", response.data);
-      });
+    updatePosition: function () {
+      axios
+        .patch("http://localhost:3000/positions/" + this.currentPosition.id, this.currentPosition)
+        .then((response) => {
+          console.log("success", response.data);
+        });
     },
     createPosition: function () {
       axios

@@ -5,7 +5,7 @@
         <!-- Sidebar - Brand -->
         <a class="sidebar-brand d-flex align-items-center justify-content-center">
           <div class="sidebar-brand-text mx-3">
-            <i class="fab fa-bitcoin"></i>
+            <img src="./assets/logo.png" style="width: 35px; height: 35px" />
             CryptoGRAPHer
           </div>
         </a>
@@ -126,8 +126,10 @@
                     aria-expanded="false"
                   >
                     <span class="mr-2 d-none d-lg-inline text-gray-600 small"></span>
-                    <span class="mr-2 d-none d-lg-inline text-gray-600 small">{{ this.currentUserName }}</span>
-                    <img class="img-profile rounded-circle" src="img/undraw_profile.svg" />
+                    <span class="mr-2 d-none d-lg-inline text-gray-600" style="font-size: md">
+                      {{ this.currentUserName }}
+                    </span>
+                    <i class="fas fa-user-circle fa-3x"></i>
                   </a>
                   <!-- Dropdown - User Information -->
                   <div
@@ -187,7 +189,7 @@
                     aria-expanded="false"
                   >
                     <span class="mr-2 d-none d-lg-inline text-gray-600 small"></span>
-                    <img class="img-profile rounded-circle" src="img/undraw_profile.svg" />
+                    <i class="fas fa-plus-circle fa-3x" style="color: #1cc88a"></i>
                   </a>
                   <!-- Dropdown - User Information -->
                   <div

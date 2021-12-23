@@ -50,8 +50,8 @@ export default {
       },
     };
   },
-  mounted: function () {
-    this.renderChart(this.chartData, this.options);
+  mounted: async function () {
+    await this.renderChart(this.chartData, this.options);
   },
 };
 </script>
