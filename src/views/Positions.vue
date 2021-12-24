@@ -288,11 +288,9 @@ export default {
       this.currentPosition = position;
     },
     updatePosition: function () {
-      axios
-        .patch("http://localhost:3000/positions/" + this.currentPosition.id, this.currentPosition)
-        .then((response) => {
-          console.log("success", response.data);
-        });
+      axios.patch("positions/" + this.currentPosition.id, this.currentPosition).then((response) => {
+        console.log("success", response.data);
+      });
     },
     createPosition: function () {
       axios
