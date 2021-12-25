@@ -4,7 +4,7 @@ import router from "./router";
 import axios from "axios";
 
 // axios.defaults.baseURL = process.env.NODE_ENV === "development" ? "https://morning-cove-71862.herokuapp.com" : "/";
-axios.defaults.baseURL = process.env.NODE_ENV === "development" ? "https://fast-mesa-53000.herokuapp.com" : "/";
+axios.defaults.baseURL = process.env.NODE_ENV === "development" ? "https://dry-temple-69566.herokuapp.com" : "/";
 Vue.config.productionTip = false;
 
 var jwt = localStorage.getItem("jwt");
