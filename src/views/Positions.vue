@@ -265,7 +265,7 @@ export default {
   methods: {
     indexPositions: function () {
       axios
-        .get("positions")
+        .get("https://dry-temple-69566.herokuapp.com/positions")
         .then((response) => {
           this.positions = response.data;
           for (let i = 0; i < this.positions.length; ++i) {
@@ -288,13 +288,15 @@ export default {
       this.currentPosition = position;
     },
     updatePosition: function () {
-      axios.patch("positions/" + this.currentPosition.id, this.currentPosition).then((response) => {
-        console.log("success", response.data);
-      });
+      axios
+        .patch("https://dry-temple-69566.herokuapp.com/positions/" + this.currentPosition.id, this.currentPosition)
+        .then((response) => {
+          console.log("success", response.data);
+        });
     },
     createPosition: function () {
       axios
-        .post("positions", this.newPositionParams)
+        .post("https://dry-temple-69566.herokuapp.com/positions/", this.newPositionParams)
         .then((response) => {
           console.log(response.data);
         })
@@ -303,7 +305,7 @@ export default {
         });
     },
     destroyPosition: function (position) {
-      axios.delete("positions/" + position.id).then((response) => {
+      axios.delete("https://dry-temple-69566.herokuapp.com/positions/" + position.id).then((response) => {
         console.log("Sucess!", response.data);
         var index = this.positions.indexOf(position);
         this.positions.splice(index, 1);

@@ -118,13 +118,13 @@ export default {
     };
   },
   created: function () {
-    axios.get("news").then((response) => {
+    axios.get("https://dry-temple-69566.herokuapp.com/news").then((response) => {
       console.log("success", response.data);
       for (let i = 0; i < 5; ++i) {
         this.news.push(response.data.articles[i]);
       }
     });
-    axios.get("top-coins").then((response) => {
+    axios.get("https://dry-temple-69566.herokuapp.com/top-coins").then((response) => {
       console.log("success", response.data);
       this.coins = response.data;
       this.coins.forEach((coin) => {
