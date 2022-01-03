@@ -116,7 +116,7 @@ export default {
   methods: {
     indexWatchlists: function () {
       axios
-        .get("watchlists")
+        .get("https://dry-temple-69566.herokuapp.com/watchlists")
         .then((response) => {
           this.watchlists = response.data;
           console.log("Successfully indexed watchlists!", this.watchlists);
@@ -125,7 +125,7 @@ export default {
     },
     createWatchlist: function () {
       axios
-        .post("watchlists", this.newWatchlistParams)
+        .post("https://dry-temple-69566.herokuapp.com/watchlists", this.newWatchlistParams)
         .then((response) => {
           console.log(response.data);
         })
@@ -143,7 +143,7 @@ export default {
         .catch((error) => console.log(error.response));
     },
     destroyWatchlist: function (watchlist) {
-      axios.delete("watchlists/" + watchlist.id).then((response) => {
+      axios.delete("https://dry-temple-69566.herokuapp.com/watchlists/" + watchlist.id).then((response) => {
         console.log("Sucess!", response.data);
         var index = this.watchlists.indexOf(watchlist);
         this.watchlists.splice(index, 1);

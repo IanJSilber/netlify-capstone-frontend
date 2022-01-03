@@ -88,7 +88,7 @@ export default {
   methods: {
     submit: function () {
       axios
-        .post("users", this.newUserParams)
+        .post("https://dry-temple-69566.herokuapp.com/users", this.newUserParams)
         .then((response) => {
           console.log(response.data);
           this.$router.push("/login");

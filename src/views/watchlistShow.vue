@@ -172,13 +172,13 @@ export default {
       window.location.reload();
     },
     indexAssets: function () {
-      axios.get("assets/" + this.$route.params.id).then((response) => {
+      axios.get("https://dry-temple-69566.herokuapp.com/assets/" + this.$route.params.id).then((response) => {
         this.assets = response.data;
         console.log("success -assets!", response.data);
       });
     },
     showWatchlist: function () {
-      axios.get("watchlists/" + this.$route.params.id).then((response) => {
+      axios.get("https://dry-temple-69566.herokuapp.com/watchlists/" + this.$route.params.id).then((response) => {
         this.currentWatchlist = response.data;
         console.log("success -watchlist!", response.data);
       });
@@ -198,7 +198,7 @@ export default {
         });
     },
     destroyAsset: function (asset) {
-      axios.delete("assets/" + asset.id).then((response) => {
+      axios.delete("https://dry-temple-69566.herokuapp.com/assets/" + asset.id).then((response) => {
         console.log("Sucess!", response.data);
         var index = this.assets.indexOf(asset);
         this.assets.splice(index, 1);
