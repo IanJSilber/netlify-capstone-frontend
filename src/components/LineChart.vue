@@ -62,7 +62,16 @@ export default {
           this.totalPnl7Days += this.positions[i].pnl_7_days;
           this.totalPnl30Days += this.positions[i].pnl_30_days;
         }
-        this.totalPnl7Days += this.totalValue;
+        if (this.totalPnl7Days > 0) {
+          this.totalPnl7Days -= this.totalValue;
+        } else {
+          this.totalPnl7Days = Math.abs(this.totalPnl7Days) - this.totalValue;
+        }
+        if (this.totalPnl30Days > 0) {
+          this.totalPnl30Days -= this.totalValue;
+        } else {
+          this.totalPnl30Days = Math.abs(this.totalPnl30Days) - this.totalValue;
+        }
         this.totalPnl30Days += this.totalValue;
         this.chartData.datasets[0].data.push(this.totalPnl30Days);
         this.chartData.datasets[0].data.push(this.totalPnl7Days);
