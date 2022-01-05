@@ -53,7 +53,7 @@ export default {
   },
   mounted: async function () {
     await axios
-      .get("positions")
+      .get("https://dry-temple-69566.herokuapp.com/positions")
       .then((response) => {
         this.positions = response.data;
         console.log(response.data);
