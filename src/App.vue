@@ -244,7 +244,7 @@ export default {
       window.location.reload();
     },
     indexUser() {
-      axios.get("users").then((response) => {
+      axios.get("https://dry-temple-69566.herokuapp.com/users").then((response) => {
         console.log("success name", response.data);
         this.currentUserName = response.data.name;
       });
