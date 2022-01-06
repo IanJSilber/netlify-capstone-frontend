@@ -48,11 +48,12 @@
                           <input class="btn btn-primary btn-user btn-block" type="submit" value="login" />
                         </form>
                         <hr />
-                        <!-- <div class="text-center">
-                          <a class="small" href="forgot-password.html">Forgot Password?</a>
-                        </div> -->
                         <div class="text-center">
-                          <router-link class="small" to="/signup">Create an Account!</router-link>
+                          <p class="small">Email: demo@test.com</p>
+                          <p class="small">Password: password</p>
+                        </div>
+                        <div class="text-center">
+                          <router-link class="small" to="/signup">Or feel free to create an Account here!</router-link>
                         </div>
                       </div>
                     </div>
