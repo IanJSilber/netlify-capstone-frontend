@@ -72,7 +72,6 @@ export default {
         } else {
           this.totalPnl30Days = this.totalValue - Math.abs(this.totalPnl30Days);
         }
-        this.totalPnl30Days += this.totalValue;
         this.chartData.datasets[0].data.push(this.totalPnl30Days);
         this.chartData.datasets[0].data.push(this.totalPnl7Days);
         this.chartData.datasets[0].data.push(this.totalValue);

@@ -8,11 +8,13 @@
         <div class="container-fluid">
           <!-- DataTales Example -->
           <div v-if="this.totalPnL < 0">
+            <!-- check if totalPnl is positive or negative, if negative display whats beneath -->
             <h1 class="h3 mb-2 text-gray-800">Portfolio status: not good</h1>
             <p>You're down -${{ Intl.NumberFormat("en-US").format(totalPnL * -1) }} or {{ lamboPnL }} Lambos</p>
             <p>Oops looks like all your positions are underwater!</p>
           </div>
           <div v-else>
+            <!-- if positive, display the following -->
             <h1 class="h3 mb-2 text-gray-800">Portfolio status: Looking good</h1>
             <p>
               You're up ${{ Intl.NumberFormat("en-US").format(totalPnL) }} or {{ lamboPnL }} Lamborghini Aventadors.
@@ -28,6 +30,7 @@
                     <h4 class="m-0 font-weight-bold text-primary">Your Portfolio</h4>
                     <h6 class="m-0 font-weight-bold text-primary">
                       ${{ Intl.NumberFormat("en-US").format(totalValue) }} or {{ totalLamboValue }} Lambos
+                      <!-- display lambo value :) -->
                     </h6>
                   </div>
                 </div>
@@ -269,11 +272,11 @@ export default {
         .then((response) => {
           this.positions = response.data;
           for (let i = 0; i < this.positions.length; ++i) {
+            // get the totalValue, totalPnl, and totalPnl30Days by going through each position returned from index positions
             this.totalValue += this.positions[i].position_value;
             this.totalPnL += this.positions[i].pnl_dollars;
             this.totalPnl30Days += this.positions[i].pnl_30_days;
           }
-          this.totalPnl30Days += this.totalValue;
           this.totalLamboValue = parseFloat(this.totalValue / this.lambo).toFixed(2);
           this.lamboPnL = parseFloat(this.totalPnL / this.lambo).toFixed(5);
           console.log("Successfully indexed positions!", this.positions);
