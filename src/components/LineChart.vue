@@ -65,12 +65,12 @@ export default {
         if (this.totalPnl7Days > 0) {
           this.totalPnl7Days = this.totalValue - this.totalPnl7Days;
         } else {
-          this.totalPnl7Days = this.totalValue - Math.abs(this.totalPnl7Days);
+          this.totalPnl7Days = this.totalValue + Math.abs(this.totalPnl7Days);
         }
         if (this.totalPnl30Days > 0) {
           this.totalPnl30Days = this.totalValue - this.totalPnl30Days;
         } else {
-          this.totalPnl30Days = this.totalValue - Math.abs(this.totalPnl30Days);
+          this.totalPnl30Days = this.totalValue + Math.abs(this.totalPnl30Days);
         }
         this.chartData.datasets[0].data.push(this.totalPnl30Days);
         this.chartData.datasets[0].data.push(this.totalPnl7Days);
