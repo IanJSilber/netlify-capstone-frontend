@@ -6,7 +6,8 @@
         <!-- Topbar -->
         <!-- Begin Page Content -->
         <div class="container-fluid">
-          <!-- DataTales Example -->
+          <!--  -->
+          <!-- beginning of Portfolio status header -->
           <div v-if="this.totalPnL < 0">
             <!-- check if totalPnl is positive or negative, if negative display whats beneath -->
             <h1 class="h3 mb-2 text-gray-800">Portfolio status: not good</h1>
@@ -22,6 +23,9 @@
             </p>
           </div>
           <br />
+          <!-- End of Portfolio status header -->
+          <!--  -->
+          <!-- Beginning of Line Chart from './components/LineChart.vue' -->
           <div class="row">
             <div class="col-xl-12 col-md-6 mb-4">
               <div class="card shadow mb-4">
@@ -38,12 +42,15 @@
                   <h3>Portfolio perfomance over the past 30 days</h3>
                   <line-chart></line-chart>
 
-                  <div v-if="this.totalPnl30Days > this.totalValue">Yikes, looks rough</div>
-                  <div v-if="this.totalPnl30Days < this.totalValue">Nice!</div>
+                  <div v-if="this.totalPnL < 0">Yikes, looks rough</div>
+                  <div v-if="this.totalPnl > 0">Nice!</div>
                 </div>
               </div>
             </div>
           </div>
+          <!-- End of Line Chart -->
+          <!--  -->
+          <!-- Beginning of Positions table -->
           <div class="row">
             <div class="col-xl-8 col-lg-7">
               <div class="card shadow mb-4">
@@ -57,6 +64,7 @@
                     </a>
                   </div>
                 </div>
+                <!-- outline of actual table -->
                 <div class="card-body">
                   <div class="table-responsive">
                     <div v-if="$parent.isLoggedIn()">
@@ -73,7 +81,7 @@
                             <th>24hr % Change</th>
                           </tr>
                         </thead>
-
+                        <!-- Assigning values for various cells -->
                         <tr v-for="position in positions" :key="position.id">
                           <td>
                             {{ position.symbol }}
@@ -105,6 +113,9 @@
                 </div>
               </div>
             </div>
+            <!-- End of Positions table -->
+            <!--  -->
+            <!-- Beginning of Diversification Doughnut Chart from './components/DoughnutChart.vue' -->
             <div class="col-xl-4 col-lg-5">
               <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
@@ -120,9 +131,11 @@
                 </div>
               </div>
             </div>
+            <!-- End of Doughnut Chart -->
           </div>
         </div>
-        <!-- /.container-fluid -->
+        <!--  -->
+        <!-- Beginning of Create Position Modal -->
         <div
           class="modal fade"
           id="createModal"
@@ -178,6 +191,9 @@
             </div>
           </div>
         </div>
+        <!-- End of Create Position Modal -->
+        <!--  -->
+        <!-- Beginning of Edit/Destroy Position Modal -->
         <div class="row no-gutters align-items-center">
           <div
             class="modal fade"
@@ -230,6 +246,7 @@
             </div>
           </div>
         </div>
+        <!-- End of Edit/Destroy Position Modal -->
       </div>
       <!-- /.container-fluid -->
     </div>
@@ -277,8 +294,8 @@ export default {
             this.totalPnL += this.positions[i].pnl_dollars;
             this.totalPnl30Days += this.positions[i].pnl_30_days;
           }
-          this.totalLamboValue = parseFloat(this.totalValue / this.lambo).toFixed(2);
-          this.lamboPnL = parseFloat(this.totalPnL / this.lambo).toFixed(5);
+          this.totalLamboValue = parseFloat(this.totalValue / this.lambo).toFixed(2); // lambo math
+          this.lamboPnL = parseFloat(this.totalPnL / this.lambo).toFixed(5); // lambo pnl math
           console.log("Successfully indexed positions!", this.positions);
         })
         .catch((error) => console.log(error.response));

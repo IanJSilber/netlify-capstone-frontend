@@ -257,6 +257,7 @@ export default {
       }
     },
     isLoggedIn: function () {
+      // keep this function in app.vue so we can call it in different vues
       if (localStorage.getItem("jwt")) {
         return true;
       } else {
@@ -265,6 +266,7 @@ export default {
       }
     },
     logout: function () {
+      // keep this function in app.vue so we can call it in different vues
       delete axios.defaults.headers.common["Authorization"];
       localStorage.removeItem("jwt");
       if (this.$route !== "/") {
