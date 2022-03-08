@@ -8,17 +8,17 @@
         <div class="container-fluid">
           <!--  -->
           <!-- beginning of Portfolio status header -->
-          <div v-if="this.totalPnL < 0">
+          <div v-if="this.totalPnl < 0">
             <!-- check if totalPnl is positive or negative, if negative display whats beneath -->
             <h1 class="h3 mb-2 text-gray-800">Portfolio status: not good</h1>
-            <p>You're down -${{ Intl.NumberFormat("en-US").format(totalPnL * -1) }} or {{ lamboPnL }} Lambos</p>
+            <p>You're down -${{ Intl.NumberFormat("en-US").format(totalPnl * -1) }} or {{ lamboPnL }} Lambos</p>
             <p>Oops looks like all your positions are underwater!</p>
           </div>
           <div v-else>
             <!-- if positive, display the following -->
             <h1 class="h3 mb-2 text-gray-800">Portfolio status: Looking good</h1>
             <p>
-              You're up ${{ Intl.NumberFormat("en-US").format(totalPnL) }} or {{ lamboPnL }} Lamborghini Aventadors.
+              You're up ${{ Intl.NumberFormat("en-US").format(totalPnl) }} or {{ lamboPnL }} Lamborghini Aventadors.
               Exciting stuff.
             </p>
           </div>
@@ -42,7 +42,7 @@
                   <h3>Portfolio perfomance over the past 30 days</h3>
                   <line-chart></line-chart>
 
-                  <div v-if="this.totalPnL < 0">Yikes, looks rough</div>
+                  <div v-if="this.totalPnl < 0">Yikes, looks rough</div>
                   <div v-if="this.totalPnl > 0">Nice!</div>
                 </div>
               </div>
@@ -182,9 +182,7 @@
                   </div>
                   <div class="modal-footer">
                     <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <button class="btn btn-primary" data-dismiss="modal" v-on:click="createPosition(), reloadPage()">
-                      Add
-                    </button>
+                    <button class="btn btn-primary" data-dismiss="modal" v-on:click="createPosition()">Add</button>
                   </div>
                 </form>
               </div>
@@ -226,7 +224,7 @@
                         class="btn btn-danger"
                         type="button"
                         data-dismiss="modal"
-                        v-on:click="destroyPosition(currentPosition), reloadPage()"
+                        v-on:click="destroyPosition(currentPosition)"
                       >
                         Delete
                       </button>
@@ -234,7 +232,7 @@
                         class="btn btn-primary"
                         type="button"
                         data-dismiss="modal"
-                        v-on:click="updatePosition(currentPosition), reloadPage()"
+                        v-on:click="updatePosition(currentPosition)"
                       >
                         Update
                       </button>
@@ -272,7 +270,7 @@ export default {
       currentPosition: {},
       newPositionParams: { symbol: "", amount: 0.0 },
       totalValue: 0,
-      totalPnL: 0,
+      totalPnl: 0,
       lambo: 517770,
       totalLamboValue: 0,
       lamboPnL: 0,
@@ -291,11 +289,11 @@ export default {
           for (let i = 0; i < this.positions.length; ++i) {
             // get the totalValue, totalPnl, and totalPnl30Days by going through each position returned from index positions
             this.totalValue += this.positions[i].position_value;
-            this.totalPnL += this.positions[i].pnl_dollars;
+            this.totalPnl += this.positions[i].pnl_dollars;
             this.totalPnl30Days += this.positions[i].pnl_30_days;
           }
           this.totalLamboValue = parseFloat(this.totalValue / this.lambo).toFixed(2); // lambo math
-          this.lamboPnL = parseFloat(this.totalPnL / this.lambo).toFixed(5); // lambo pnl math
+          this.lamboPnL = parseFloat(this.totalPnl / this.lambo).toFixed(5); // lambo pnl math
           console.log("Successfully indexed positions!", this.positions);
         })
         .catch((error) => console.log(error.response));
@@ -313,6 +311,7 @@ export default {
         .then((response) => {
           console.log("success", response.data);
         });
+      this.reloadPage();
     },
     createPosition: function () {
       axios
@@ -323,6 +322,7 @@ export default {
         .catch((error) => {
           this.errors = error.response.data.errors;
         });
+      this.reloadPage();
     },
     destroyPosition: function (position) {
       axios.delete("https://dry-temple-69566.herokuapp.com/positions/" + position.id).then((response) => {
@@ -330,6 +330,7 @@ export default {
         var index = this.positions.indexOf(position);
         this.positions.splice(index, 1);
       });
+      this.reloadPage();
     },
   },
 };

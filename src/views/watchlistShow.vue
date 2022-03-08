@@ -131,9 +131,7 @@
                     </div>
                     <div class="modal-footer">
                       <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                      <button class="btn btn-primary" data-dismiss="modal" v-on:click="createAsset(), reloadPage()">
-                        Add
-                      </button>
+                      <button class="btn btn-primary" data-dismiss="modal" v-on:click="createAsset()">Add</button>
                     </div>
                   </form>
                 </div>
@@ -156,7 +154,7 @@ export default {
   },
   data: function () {
     return {
-      newAssetParams: { symbol: "", watchlist_id: this.$route.params.id },
+      newAssetParams: { watchlist_id: this.$route.params.id, symbol: "" },
       currentWatchlist: {},
       currentAsset: false,
       assets: [],
@@ -172,16 +170,26 @@ export default {
       window.location.reload();
     },
     indexAssets: function () {
-      axios.get("https://dry-temple-69566.herokuapp.com/assets/" + this.$route.params.id).then((response) => {
-        this.assets = response.data;
-        console.log("success -assets!", response.data);
-      });
+      axios
+        .get("assets/" + this.$route.params.id)
+        .then((response) => {
+          this.assets = response.data;
+          console.log("success -assets!", response.data);
+        })
+        .catch((error) => {
+          this.errors = error.response.data.errors;
+        });
     },
     showWatchlist: function () {
-      axios.get("https://dry-temple-69566.herokuapp.com/watchlists/" + this.$route.params.id).then((response) => {
-        this.currentWatchlist = response.data;
-        console.log("success -watchlist!", response.data);
-      });
+      axios
+        .get("https://dry-temple-69566.herokuapp.com/watchlists/" + this.$route.params.id)
+        .then((response) => {
+          this.currentWatchlist = response.data;
+          console.log("success -watchlist!", response.data);
+        })
+        .catch((error) => {
+          this.errors = error.response.data.errors;
+        });
     },
     showAsset: function (asset) {
       console.log(asset);
@@ -189,13 +197,14 @@ export default {
     },
     createAsset: function () {
       axios
-        .post("assets", this.newAssetParams)
+        .post("https://dry-temple-69566.herokuapp.com/assets/", this.newAssetParams)
         .then((response) => {
           console.log(response.data);
         })
         .catch((error) => {
           this.errors = error.response.data.errors;
         });
+      this.reloadPage();
     },
     destroyAsset: function (asset) {
       axios.delete("https://dry-temple-69566.herokuapp.com/assets/" + asset.id).then((response) => {
