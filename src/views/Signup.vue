@@ -97,11 +97,6 @@ export default {
           this.errors = error.response.data.errors;
         });
     },
-    logout: function () {
-      delete axios.defaults.headers.common["Authorization"];
-      localStorage.removeItem("jwt");
-      this.$router.push("/");
-    },
   },
 };
 </script>

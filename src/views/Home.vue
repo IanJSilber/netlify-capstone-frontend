@@ -4,9 +4,15 @@
     <div id="content">
       <div class="home">
         <div class="container-fluid">
+          <!--  -->
+          <!-- Header -->
           <h1 class="h1 mb-2 text-gray-800">Dashboard</h1>
           <h1 class="h6 mb-2 text-gray-800">Whats going on in the world of crypto</h1>
+          <!-- End Header -->
+          <!--  -->
           <hr />
+          <!--  -->
+          <!-- Top 3 by volatility -->
           <h1 class="h3 mb-2 text-gray-800">Top 3 Movers</h1>
           <div class="row">
             <div class="col-xl-4 col-lg-5">
@@ -52,6 +58,9 @@
               </div>
             </div>
           </div>
+          <!-- End of top 3 volatility  -->
+          <!--  -->
+          <!-- Top 15 cryptos chart -->
           <h1 class="h3 mb-2 text-gray-800">Top 15 cryptocurrencies</h1>
           <p class="mb-4">Top ranked cryptocurrencies by market capitalization.</p>
 
@@ -84,6 +93,9 @@
               </div>
             </div>
           </div>
+          <!-- end of top 15 chart -->
+          <!--  -->
+          <!-- Top 5 news stories related to crypto -->
           <h1 class="h3 mb-2 text-gray-800">News</h1>
           <p class="mb-4">Catch up on the latest important news.</p>
           <div v-for="news in news" :key="news.id">
@@ -98,6 +110,8 @@
               </div>
             </div>
           </div>
+          <!-- end of news -->
+          <!--  -->
         </div>
       </div>
     </div>

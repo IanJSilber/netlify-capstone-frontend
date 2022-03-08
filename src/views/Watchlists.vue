@@ -135,7 +135,7 @@ export default {
     },
     showUsers: function () {
       axios
-        .get("users")
+        .get("https://dry-temple-69566.herokuapp.com/users")
         .then((response) => {
           this.user = response.data;
           console.log("success", response.data);
