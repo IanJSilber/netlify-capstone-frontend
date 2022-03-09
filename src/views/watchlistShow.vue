@@ -171,7 +171,7 @@ export default {
     },
     indexAssets: function () {
       axios
-        .get("assets/" + this.$route.params.id)
+        .get("https://dry-temple-69566.herokuapp.com/assets/" + this.$route.params.id)
         .then((response) => {
           this.assets = response.data;
           console.log("success -assets!", response.data);
