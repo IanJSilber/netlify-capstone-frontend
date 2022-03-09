@@ -4,7 +4,7 @@
     <div id="content">
       <div id="watchlist-show">
         <div class="container-fluid">
-          <router-link to="/watchlists">back</router-link>
+          <router-link to="/">home</router-link>
           <h1 class="h3 mb-2 text-gray-800">Hows it looking?</h1>
           <p class="mb-4">Any buying opportunities out there?</p>
 
@@ -33,7 +33,7 @@
           <div class="card shadow mb-4">
             <div class="card-header py-3">
               <div class="text-m font-weight-bold text-primary text-uppercase mb-1">
-                <h4 class="m-0 font-weight-bold text-primary">{{ currentWatchlist.name }}</h4>
+                <h4 class="m-0 font-weight-bold text-primary">{{ $parent.currentUserName }}'s Watchlist</h4>
               </div>
             </div>
           </div>
@@ -154,8 +154,7 @@ export default {
   },
   data: function () {
     return {
-      newAssetParams: { watchlist_id: this.$route.params.id, symbol: "" },
-      currentWatchlist: {},
+      newAssetParams: { symbol: "" },
       currentAsset: false,
       assets: [],
       errors: [],
@@ -163,7 +162,6 @@ export default {
   },
   created: function () {
     this.indexAssets();
-    this.showWatchlist();
   },
   methods: {
     reloadPage: function () {
@@ -171,21 +169,10 @@ export default {
     },
     indexAssets: function () {
       axios
-        .get("https://dry-temple-69566.herokuapp.com/assets/" + this.$route.params.id)
+        .get("https://dry-temple-69566.herokuapp.com/assets")
         .then((response) => {
           this.assets = response.data;
           console.log("success -assets!", response.data);
-        })
-        .catch((error) => {
-          this.errors = error.response.data.errors;
-        });
-    },
-    showWatchlist: function () {
-      axios
-        .get("https://dry-temple-69566.herokuapp.com/watchlists/" + this.$route.params.id)
-        .then((response) => {
-          this.currentWatchlist = response.data;
-          console.log("success -watchlist!", response.data);
         })
         .catch((error) => {
           this.errors = error.response.data.errors;
@@ -197,7 +184,7 @@ export default {
     },
     createAsset: function () {
       axios
-        .post("https://dry-temple-69566.herokuapp.com/assets/", this.newAssetParams)
+        .post("https://dry-temple-69566.herokuapp.com/assets", this.newAssetParams)
         .then((response) => {
           console.log(response.data);
         })

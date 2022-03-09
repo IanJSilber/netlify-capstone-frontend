@@ -60,9 +60,9 @@
             <i class="fas fa-fw fa-folder"></i>
             <span>Positions</span>
           </router-link>
-          <router-link class="nav-link" to="/watchlists">
+          <router-link class="nav-link" to="/assets">
             <i class="fas fa-fw fa-chart-area"></i>
-            <span>Watchlists</span>
+            <span>Watchlist</span>
           </router-link>
         </li>
 
