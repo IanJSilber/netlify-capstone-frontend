@@ -42,8 +42,8 @@
                   <h3>Portfolio perfomance over the past 30 days</h3>
                   <line-chart></line-chart>
 
-                  <div v-if="this.totalPnl < 0">Yikes, looks rough</div>
-                  <div v-if="this.totalPnl > 0">Nice!</div>
+                  <h4 v-if="this.totalPnl < 0">Yikes, looks rough</h4>
+                  <h4 v-if="this.totalPnl >= 0">Nice!</h4>
                 </div>
               </div>
             </div>
@@ -315,7 +315,7 @@ export default {
     },
     createPosition: function () {
       axios
-        .post("https://dry-temple-69566.herokuapp.com/positions/", this.newPositionParams)
+        .post("https://dry-temple-69566.herokuapp.com/positions", this.newPositionParams)
         .then((response) => {
           console.log(response.data);
         })
