@@ -44,7 +44,7 @@ export default {
     };
   },
   mounted: async function () {
-    axios
+    await axios
       .get("https://dry-temple-69566.herokuapp.com/positions")
       .then((response) => {
         this.positions = response.data;
