@@ -134,9 +134,7 @@ export default {
   created: function () {
     axios.get("https://dry-temple-69566.herokuapp.com/news").then((response) => {
       console.log("success", response.data);
-      for (let i = 0; i < 5; ++i) {
-        this.news.push(response.data.articles[i]);
-      }
+      this.news = response.data;
     });
     axios.get("https://dry-temple-69566.herokuapp.com/top-coins").then((response) => {
       console.log("success", response.data);
