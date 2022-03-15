@@ -25,7 +25,7 @@
                   <h3>{{ this.sortedCoins[0].percent_change_24h }}%</h3>
                   <hr />
                   <p>rank: {{ this.sortedCoins[0].rank }}</p>
-                  <p>price: ${{ this.sortedCoins[0].price }}</p>
+                  <p>price: ${{ Intl.NumberFormat("en-US").format(this.sortedCoins[0].price) }}</p>
                 </div>
               </div>
             </div>
@@ -39,7 +39,7 @@
                   <h3>{{ this.sortedCoins[1].percent_change_24h }}%</h3>
                   <hr />
                   <p>rank: {{ this.sortedCoins[1].rank }}</p>
-                  <p>price: ${{ this.sortedCoins[1].price }}</p>
+                  <p>price: ${{ Intl.NumberFormat("en-US").format(this.sortedCoins[1].price) }}</p>
                 </div>
               </div>
             </div>
@@ -53,7 +53,7 @@
                   <h3>{{ this.sortedCoins[2].percent_change_24h }}%</h3>
                   <hr />
                   <p>rank: {{ this.sortedCoins[2].rank }}</p>
-                  <p>price: ${{ this.sortedCoins[2].price }}</p>
+                  <p>price: ${{ Intl.NumberFormat("en-US").format(this.sortedCoins[2].price) }}</p>
                 </div>
               </div>
             </div>
