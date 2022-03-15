@@ -21,11 +21,11 @@
                   <h6 class="m-0 font-weight-bold" style="color: white">1st Mover</h6>
                 </div>
                 <div class="card-body">
-                  <h3>{{ this.coinOne.name }}</h3>
-                  <h3>{{ this.coinOne.percent_change_24h }}%</h3>
+                  <h3>{{ this.sortedCoins[0].name }}</h3>
+                  <h3>{{ this.sortedCoins[0].percent_change_24h }}%</h3>
                   <hr />
-                  <p>rank: {{ this.coinOne.rank }}</p>
-                  <p>price: ${{ this.coinOne.price }}</p>
+                  <p>rank: {{ this.sortedCoins[0].rank }}</p>
+                  <p>price: ${{ this.sortedCoins[0].price }}</p>
                 </div>
               </div>
             </div>
@@ -35,11 +35,11 @@
                   <h6 class="m-0 font-weight-bold" style="color: white">2nd Mover</h6>
                 </div>
                 <div class="card-body">
-                  <h3>{{ this.coinTwo.name }}</h3>
-                  <h3>{{ this.coinTwo.percent_change_24h }}%</h3>
+                  <h3>{{ this.sortedCoins[1].name }}</h3>
+                  <h3>{{ this.sortedCoins[1].percent_change_24h }}%</h3>
                   <hr />
-                  <p>rank: {{ this.coinTwo.rank }}</p>
-                  <p>price: ${{ this.coinTwo.price }}</p>
+                  <p>rank: {{ this.sortedCoins[1].rank }}</p>
+                  <p>price: ${{ this.sortedCoins[1].price }}</p>
                 </div>
               </div>
             </div>
@@ -49,11 +49,11 @@
                   <h6 class="m-0 font-weight-bold" style="color: white">3rd Mover</h6>
                 </div>
                 <div class="card-body">
-                  <h3>{{ this.coinThree.name }}</h3>
-                  <h3>{{ this.coinThree.percent_change_24h }}%</h3>
+                  <h3>{{ this.sortedCoins[2].name }}</h3>
+                  <h3>{{ this.sortedCoins[2].percent_change_24h }}%</h3>
                   <hr />
-                  <p>rank: {{ this.coinThree.rank }}</p>
-                  <p>price: ${{ this.coinThree.price }}</p>
+                  <p>rank: {{ this.sortedCoins[2].rank }}</p>
+                  <p>price: ${{ this.sortedCoins[2].price }}</p>
                 </div>
               </div>
             </div>
@@ -126,41 +126,37 @@ export default {
     return {
       news: [],
       coins: [],
+      sortedCoins: [],
       coinOne: { percent_change_24h: 0 },
       coinTwo: { percent_change_24h: 0 },
       coinThree: { percent_change_24h: 0 },
     };
   },
   created: function () {
-    axios.get("https://dry-temple-69566.herokuapp.com/news").then((response) => {
-      console.log("success", response.data);
-      this.news = response.data;
-    });
-    axios.get("https://dry-temple-69566.herokuapp.com/top-coins").then((response) => {
-      console.log("success", response.data);
-      this.coins = response.data;
-      this.coins.forEach((coin) => {
-        if (Math.abs(coin.percent_change_24h) > Math.abs(this.coinOne.percent_change_24h)) {
-          this.coinOne = coin;
-        }
+    this.indexNews();
+    this.indexTopCoins();
+    // this.sortCoins();
+  },
+  methods: {
+    indexNews() {
+      axios.get("https://dry-temple-69566.herokuapp.com/news").then((response) => {
+        this.news = response.data["articles"];
+        console.log("success news loaded");
       });
-      this.coins.forEach((coin) => {
-        if (
-          Math.abs(coin.percent_change_24h) > Math.abs(this.coinTwo.percent_change_24h) &&
-          Math.abs(coin.percent_change_24h) < Math.abs(this.coinOne.percent_change_24h)
-        ) {
-          this.coinTwo = coin;
-        }
+    },
+    indexTopCoins() {
+      axios.get("https://dry-temple-69566.herokuapp.com/top-coins").then((response) => {
+        console.log("success coins loaded", response.data);
+        this.coins = response.data;
+        // must copy the original array using spread operator to prevent it from being mutated
+        this.sortedCoins = [...this.coins].sort((a, b) => {
+          return Math.abs(b.percent_change_24h) - Math.abs(a.percent_change_24h);
+        });
+        this.coinOne = this.sortedCoins[0];
+        this.coinTwo = this.sortedCoins[1];
+        this.coinThree = this.sortedCoins[2];
       });
-      this.coins.forEach((coin) => {
-        if (
-          Math.abs(coin.percent_change_24h) > Math.abs(this.coinThree.percent_change_24h) &&
-          Math.abs(coin.percent_change_24h) < Math.abs(this.coinTwo.percent_change_24h)
-        ) {
-          this.coinThree = coin;
-        }
-      });
-    });
+    },
   },
 };
 </script>
