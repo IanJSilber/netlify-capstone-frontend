@@ -54,7 +54,7 @@ export default {
       maintainAspectRatio: false,
     },
   }),
-  mounted: function () {
+  mounted: async function () {
     for (let i = 0; i < this.positions.length; ++i) {
       this.totalValue += this.positions[i].position_value;
       this.totalPnl7Days += this.positions[i].pnl_7_days;

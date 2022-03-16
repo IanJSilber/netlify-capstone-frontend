@@ -127,7 +127,7 @@
                 <div class="card-body">
                   <h3>Diversification</h3>
 
-                  <DoughnutChart />
+                  <doughnut-chart :positions="this.positions"></doughnut-chart>
 
                   <hr />
                   Please tell me you're at least well diversified. you are right? right?
@@ -275,30 +275,27 @@ export default {
     totalPnl30Days: 0.0,
   }),
   components: {
-    LineChart,
-    DoughnutChart,
+    lineChart: LineChart,
+    doughnutChart: DoughnutChart,
   },
-  created: function () {
-    this.indexPositions();
+  mounted: function () {
+    axios
+      .get("https://dry-temple-69566.herokuapp.com/positions")
+      .then((response) => {
+        this.positions = response.data;
+        for (let i = 0; i < this.positions.length; ++i) {
+          // get the totalValue, totalPnl, and totalPnl30Days by going through each position returned from index positions
+          this.totalValue += this.positions[i].position_value;
+          this.totalPnl += this.positions[i].pnl_dollars;
+          this.totalPnl30Days += this.positions[i].pnl_30_days;
+        }
+        this.totalLamboValue = parseFloat(this.totalValue / this.lambo).toFixed(2); // lambo math
+        this.lamboPnL = parseFloat(this.totalPnl / this.lambo).toFixed(5); // lambo pnl math
+        console.log("Successfully indexed positions!", this.positions);
+      })
+      .catch((error) => console.log(error.response));
   },
   methods: {
-    indexPositions: function () {
-      axios
-        .get("https://dry-temple-69566.herokuapp.com/positions")
-        .then((response) => {
-          this.positions = response.data;
-          for (let i = 0; i < this.positions.length; ++i) {
-            // get the totalValue, totalPnl, and totalPnl30Days by going through each position returned from index positions
-            this.totalValue += this.positions[i].position_value;
-            this.totalPnl += this.positions[i].pnl_dollars;
-            this.totalPnl30Days += this.positions[i].pnl_30_days;
-          }
-          this.totalLamboValue = parseFloat(this.totalValue / this.lambo).toFixed(2); // lambo math
-          this.lamboPnL = parseFloat(this.totalPnl / this.lambo).toFixed(5); // lambo pnl math
-          console.log("Successfully indexed positions!", this.positions);
-        })
-        .catch((error) => console.log(error.response));
-    },
     reloadPage: function () {
       window.location.reload();
     },
