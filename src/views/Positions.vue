@@ -127,7 +127,7 @@
                 <div class="card-body">
                   <h3>Diversification</h3>
 
-                  <doughnut-chart :positions="this.positions"></doughnut-chart>
+                  <doughnut-chart :positions="this.positions" :totalValue="totalValue"></doughnut-chart>
 
                   <hr />
                   Please tell me you're at least well diversified. you are right? right?

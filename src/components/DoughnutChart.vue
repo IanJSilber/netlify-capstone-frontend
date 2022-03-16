@@ -1,4 +1,4 @@
-<script defer>
+<script>
 import { Doughnut } from "vue-chartjs";
 
 export default {
@@ -6,6 +6,10 @@ export default {
   props: {
     positions: {
       type: Array,
+      required: true,
+    },
+    totalValue: {
+      type: Number,
       required: true,
     },
   },
@@ -49,9 +53,6 @@ export default {
   mounted: function () {
     for (let i = 0; i < this.positions.length; ++i) {
       this.chartData.labels.push(this.positions[i].symbol);
-      this.totalValue += this.positions[i].position_value;
-    }
-    for (let i = 0; i < this.positions.length; ++i) {
       this.chartData.datasets[0].data.push(
         parseFloat((this.positions[i].position_value / this.totalValue) * 100).toFixed(2)
       );
