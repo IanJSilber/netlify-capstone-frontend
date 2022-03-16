@@ -40,7 +40,8 @@
                 </div>
                 <div class="card-body">
                   <h3>Portfolio perfomance over the past 30 days</h3>
-                  <line-chart></line-chart>
+
+                  <line-chart :positions="this.positions"></line-chart>
 
                   <h4 v-if="this.totalPnl < 0">Yikes, looks rough</h4>
                   <h4 v-if="this.totalPnl >= 0">Nice!</h4>
@@ -125,7 +126,9 @@
                 <!-- Card Body -->
                 <div class="card-body">
                   <h3>Diversification</h3>
-                  <doughnut-chart></doughnut-chart>
+
+                  <DoughnutChart />
+
                   <hr />
                   Please tell me you're at least well diversified. you are right? right?
                 </div>
@@ -258,24 +261,22 @@ import LineChart from "@/components/LineChart";
 import DoughnutChart from "@/components/DoughnutChart";
 
 export default {
+  data: () => ({
+    positions: [],
+    errors: [],
+    user: {},
+    currentPosition: {},
+    newPositionParams: { symbol: "", amount: 0.0 },
+    totalValue: 0,
+    totalPnl: 0,
+    lambo: 517770,
+    totalLamboValue: 0,
+    lamboPnL: 0,
+    totalPnl30Days: 0.0,
+  }),
   components: {
     LineChart,
     DoughnutChart,
-  },
-  data: function () {
-    return {
-      positions: [],
-      errors: [],
-      user: {},
-      currentPosition: {},
-      newPositionParams: { symbol: "", amount: 0.0 },
-      totalValue: 0,
-      totalPnl: 0,
-      lambo: 517770,
-      totalLamboValue: 0,
-      lamboPnL: 0,
-      totalPnl30Days: 0.0,
-    };
   },
   created: function () {
     this.indexPositions();

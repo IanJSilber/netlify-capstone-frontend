@@ -152,14 +152,12 @@ export default {
   components: {
     WatchlistLineChart,
   },
-  data: function () {
-    return {
-      newAssetParams: { symbol: "" },
-      currentAsset: false,
-      assets: [],
-      errors: [],
-    };
-  },
+  data: () => ({
+    newAssetParams: { symbol: "" },
+    currentAsset: false,
+    assets: [],
+    errors: [],
+  }),
   created: function () {
     this.indexAssets();
   },

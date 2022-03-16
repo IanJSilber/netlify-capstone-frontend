@@ -122,16 +122,14 @@
 import axios from "axios";
 
 export default {
-  data: function () {
-    return {
-      news: [],
-      coins: [],
-      sortedCoins: [],
-      coinOne: { percent_change_24h: 0 },
-      coinTwo: { percent_change_24h: 0 },
-      coinThree: { percent_change_24h: 0 },
-    };
-  },
+  data: () => ({
+    news: [],
+    coins: [],
+    sortedCoins: [],
+    coinOne: { percent_change_24h: 0 },
+    coinTwo: { percent_change_24h: 0 },
+    coinThree: { percent_change_24h: 0 },
+  }),
   created: function () {
     this.indexNews();
     this.indexTopCoins();

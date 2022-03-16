@@ -233,12 +233,10 @@
 import axios from "axios";
 
 export default {
-  data: function () {
-    return {
-      flashMessage: "",
-      currentUserName: {},
-    };
-  },
+  data: () => ({
+    flashMessage: "",
+    currentUserName: {},
+  }),
   methods: {
     reloadPage() {
       window.location.reload();

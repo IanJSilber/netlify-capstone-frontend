@@ -76,12 +76,10 @@
 import axios from "axios";
 
 export default {
-  data: function () {
-    return {
-      errors: [],
-      newSessionParams: {},
-    };
-  },
+  data: () => ({
+    errors: [],
+    newSessionParams: {},
+  }),
   methods: {
     submit: function () {
       axios
