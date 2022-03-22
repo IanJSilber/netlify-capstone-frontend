@@ -50,14 +50,16 @@ export default {
       maintainAspectRatio: false,
     },
   }),
-  mounted: function () {
-    for (let i = 0; i < this.positions.length; ++i) {
-      this.chartData.labels.push(this.positions[i].symbol);
-      this.chartData.datasets[0].data.push(
-        parseFloat((this.positions[i].position_value / this.totalValue) * 100).toFixed(2)
-      );
-    }
-    this.renderChart(this.chartData, this.options);
+  watch: {
+    positions: function () {
+      for (let i = 0; i < this.positions.length; ++i) {
+        this.chartData.labels.push(this.positions[i].symbol);
+        this.chartData.datasets[0].data.push(
+          parseFloat((this.positions[i].position_value / this.totalValue) * 100).toFixed(2)
+        );
+      }
+      this.renderChart(this.chartData, this.options);
+    },
   },
 };
 </script>
