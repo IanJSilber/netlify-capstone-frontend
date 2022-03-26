@@ -146,7 +146,7 @@
 
 <script>
 import axios from "axios";
-import WatchlistLineChart from "@/components/WatchlistLineChart";
+import WatchlistLineChart from "@/components/Watchlists/WatchlistLineChart";
 
 export default {
   components: {

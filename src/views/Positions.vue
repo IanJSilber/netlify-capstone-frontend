@@ -6,25 +6,8 @@
         <!-- Topbar -->
         <!-- Begin Page Content -->
         <div class="container-fluid">
-          <!--  -->
-          <!-- beginning of Portfolio status header -->
-          <div v-if="this.totalPnl < 0">
-            <!-- check if totalPnl is positive or negative, if negative display whats beneath -->
-            <h1 class="h3 mb-2 text-gray-800">Portfolio status: not good</h1>
-            <p>You're down -${{ Intl.NumberFormat("en-US").format(totalPnl * -1) }} or {{ lamboPnL }} Lambos</p>
-            <p>Oops looks like all your positions are underwater!</p>
-          </div>
-          <div v-else>
-            <!-- if positive, display the following -->
-            <h1 class="h3 mb-2 text-gray-800">Portfolio status: Looking good</h1>
-            <p>
-              You're up ${{ Intl.NumberFormat("en-US").format(totalPnl) }} or {{ lamboPnL }} Lamborghini Aventadors.
-              Exciting stuff.
-            </p>
-          </div>
-          <br />
-          <!-- End of Portfolio status header -->
-          <!--  -->
+          <!-- status header found @/components/Positions/StatusHeader.vue -->
+          <status-header :totalPnl="this.totalPnl" :lamboPnL="this.lamboPnL"></status-header>
           <!-- Beginning of Line Chart from './components/LineChart.vue' -->
           <div class="row">
             <div class="col-xl-12 col-md-6 mb-4">
@@ -257,8 +240,9 @@
 
 <script>
 import axios from "axios";
-import LineChart from "@/components/LineChart";
-import DoughnutChart from "@/components/DoughnutChart";
+import LineChart from "@/components/Positions/LineChart";
+import DoughnutChart from "@/components/Positions/DoughnutChart";
+import StatusHeader from "@/components/Positions/StatusHeader";
 
 export default {
   data: () => ({
@@ -275,6 +259,7 @@ export default {
     totalPnl30Days: 0.0,
   }),
   components: {
+    statusHeader: StatusHeader,
     lineChart: LineChart,
     doughnutChart: DoughnutChart,
   },
