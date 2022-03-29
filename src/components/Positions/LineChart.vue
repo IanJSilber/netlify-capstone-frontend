@@ -42,7 +42,7 @@ export default {
         xAxes: [
           {
             gridLines: {
-              display: false,
+              display: true,
             },
           },
         ],

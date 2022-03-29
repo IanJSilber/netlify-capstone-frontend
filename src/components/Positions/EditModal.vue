@@ -52,3 +52,39 @@
     </div>
   </div>
 </template>
+
+<script>
+import axios from "axios";
+export default {
+  props: {
+    currentPosition: {
+      type: Object,
+      required: true,
+    },
+  },
+  date: () => ({
+    errors: [],
+  }),
+  methods: {
+    updatePosition: function () {
+      axios
+        .patch("https://dry-temple-69566.herokuapp.com/positions/" + this.currentPosition.id, this.currentPosition)
+        .then((response) => {
+          console.log("success", response.data);
+          this.$emit("updatedPositions");
+        })
+        .catch((error) => {
+          this.errors = error.response.data.errors;
+        });
+    },
+    destroyPosition: function (position) {
+      axios.delete("https://dry-temple-69566.herokuapp.com/positions/" + position.id).then((response) => {
+        console.log("Sucess!", response.data);
+        var index = this.positions.indexOf(position);
+        this.positions.splice(index, 1);
+        this.$emit("updatedPositions");
+      });
+    },
+  },
+};
+</script>

@@ -25,7 +25,7 @@ export default {
       type: Number,
       required: true,
     },
-    lamboPnl: {
+    lamboPnL: {
       type: Number,
       required: true,
     },
