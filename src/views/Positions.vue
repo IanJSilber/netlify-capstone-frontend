@@ -2,73 +2,73 @@
   <div id="content-wrapper" class="d-flex flex-column">
     <!-- Main Content -->
     <div id="content">
-      <div class="positions">
-        <!-- Topbar -->
-        <!-- Begin Page Content -->
-        <div class="container-fluid">
-          <!-- status header found @/components/Positions/StatusHeader.vue -->
-          <status-header :totalPnl="this.totalPnl" :lamboPnL="this.lamboPnL"></status-header>
-          <!-- Beginning of Line Chart from './components/LineChart.vue' -->
-          <div class="row">
-            <div class="col-xl-12 col-md-6 mb-4">
-              <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                  <div class="text-m font-weight-bold text-primary text-uppercase mb-1">
-                    <h4 class="m-0 font-weight-bold text-primary">Your Portfolio</h4>
-                    <h6 class="m-0 font-weight-bold text-primary">
-                      ${{ Intl.NumberFormat("en-US").format(totalValue) }} or {{ totalLamboValue }} Lambos
-                      <!-- display lambo value :) -->
-                    </h6>
+      <div v-if="$parent.isLoggedIn()">
+        <div class="positions">
+          <!-- Topbar -->
+          <!-- Begin Page Content -->
+          <div class="container-fluid">
+            <!-- status header found ../components/Positions/StatusHeader.vue -->
+            <status-header :totalPnl="this.totalPnl" :lamboPnL="this.lamboPnL"></status-header>
+            <!-- Beginning of Line Chart from '../components/Positions/LineChart.vue' -->
+            <div class="row">
+              <div class="col-xl-12 col-md-6 mb-4">
+                <div class="card shadow mb-4">
+                  <div class="card-header py-3">
+                    <div class="text-m font-weight-bold text-primary text-uppercase mb-1">
+                      <h4 class="m-0 font-weight-bold text-primary">Your Portfolio</h4>
+                      <h6 class="m-0 font-weight-bold text-primary">
+                        ${{ Intl.NumberFormat("en-US").format(totalValue) }} or {{ totalLamboValue }} Lambos
+                        <!-- display lambo value :) -->
+                      </h6>
+                    </div>
+                  </div>
+                  <div class="card-body">
+                    <h3>Portfolio perfomance over the past 30 days</h3>
+
+                    <line-chart :positions="this.positions"></line-chart>
+
+                    <h4 v-if="this.totalPnl < 0">Yikes, looks rough</h4>
+                    <h4 v-if="this.totalPnl >= 0">Nice!</h4>
                   </div>
                 </div>
-                <div class="card-body">
-                  <h3>Portfolio perfomance over the past 30 days</h3>
-
-                  <line-chart :positions="this.positions"></line-chart>
-
-                  <h4 v-if="this.totalPnl < 0">Yikes, looks rough</h4>
-                  <h4 v-if="this.totalPnl >= 0">Nice!</h4>
-                </div>
               </div>
             </div>
-          </div>
-          <!-- End of Line Chart -->
-          <!--  -->
-          <!-- Beginning of Positions table -->
-          <div class="row">
-            <positions-table :positions="this.positions"></positions-table>
-            <!-- End of Positions table -->
+            <!-- End of Line Chart -->
             <!--  -->
-            <!-- Beginning of Diversification Doughnut Chart from './components/DoughnutChart.vue' -->
-            <div class="col-xl-4 col-lg-5">
-              <div class="card shadow mb-4">
-                <!-- Card Header - Dropdown -->
-                <div class="card-header py-3">
-                  <h6 class="m-0 font-weight-bold text-primary">Diversification</h6>
-                </div>
-                <!-- Card Body -->
-                <div class="card-body">
-                  <h3>Diversification</h3>
+            <div class="row">
+              <!-- Positions table from ../components/Positions/PositionsTable.vue-->
+              <positions-table :positions="this.positions"></positions-table>
+              <!-- Beginning of Diversification Doughnut Chart from '../components/DoughnutChart.vue' -->
+              <div class="col-xl-4 col-lg-5">
+                <div class="card shadow mb-4">
+                  <!-- Card Header - Dropdown -->
+                  <div class="card-header py-3">
+                    <h6 class="m-0 font-weight-bold text-primary">Diversification</h6>
+                  </div>
+                  <!-- Card Body -->
+                  <div class="card-body">
+                    <h3>Diversification</h3>
 
-                  <doughnut-chart :positions="this.positions" :totalValue="totalValue"></doughnut-chart>
+                    <doughnut-chart :positions="this.positions" :totalValue="totalValue"></doughnut-chart>
 
-                  <hr />
-                  Please tell me you're at least well diversified. you are right? right?
+                    <hr />
+                    Please tell me you're at least well diversified. you are right? right?
+                  </div>
                 </div>
               </div>
+              <!-- End of Doughnut Chart -->
             </div>
-            <!-- End of Doughnut Chart -->
           </div>
+          <!--  -->
+          <!-- Create Position Modal from ../components/Positions/CreateModal.vue-->
+          <create-modal></create-modal>
+          <!-- edit modal from ../components/Positions/EditModal.vue -->
+          <edit-modal :currentPosition="currentPosition"></edit-modal>
         </div>
-        <!--  -->
-        <!-- Create Position Modal from ./components/Positions/CreateModal.vue-->
-        <create-modal></create-modal>
-        <!-- edit modal from ./components/Positions/EditModal.vue -->
-        <edit-modal :currentPosition="currentPosition"></edit-modal>
+        <!-- /.container-fluid -->
       </div>
-      <!-- /.container-fluid -->
+      <!-- End of Main Content -->
     </div>
-    <!-- End of Main Content -->
   </div>
 </template>
 

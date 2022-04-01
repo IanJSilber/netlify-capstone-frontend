@@ -14,50 +14,60 @@
       <!-- outline of actual table -->
       <div class="card-body">
         <div class="table-responsive">
-          <div v-if="$parent.isLoggedIn()">
-            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-              <thead>
-                <tr>
-                  <th>Asset</th>
-                  <th>Quantity</th>
-                  <th>Purchase Price</th>
-                  <th>Price</th>
-                  <th>Current Value</th>
-                  <th>$ PnL</th>
-                  <th>PnL %</th>
-                  <th>24hr % Change</th>
-                </tr>
-              </thead>
-              <!-- Assigning values for various cells -->
-              <tr v-for="position in positions" :key="position.id">
-                <td>
-                  {{ position.symbol }}
-                  <br />
-                  <a
-                    class="btn btn-success btn-icon-split"
-                    href="#"
-                    data-toggle="modal"
-                    data-target="#editModal"
-                    v-on:click="showPosition(position)"
-                  >
-                    <span class="icon text-white-50">
-                      <i class="fas fa-check"></i>
-                    </span>
-                    <span class="text">Edit</span>
-                  </a>
-                </td>
-                <td>{{ position.amount }}</td>
-                <td>${{ Intl.NumberFormat("en-US").format(position.purchase_price) }}</td>
-                <td>${{ Intl.NumberFormat("en-US").format(position.price) }}</td>
-                <td>${{ Intl.NumberFormat("en-US").format(position.position_value) }}</td>
-                <td>${{ Intl.NumberFormat("en-US").format(position.pnl_dollars) }}</td>
-                <td>{{ position.pnl_percent }}%</td>
-                <td>{{ position.percent_change_24h }}%</td>
+          <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+            <thead>
+              <tr>
+                <th>Asset</th>
+                <th>Quantity</th>
+                <th>Purchase Price</th>
+                <th>Price</th>
+                <th>Current Value</th>
+                <th>$ PnL</th>
+                <th>PnL %</th>
+                <th>24hr % Change</th>
               </tr>
-            </table>
-          </div>
+            </thead>
+            <!-- Assigning values for various cells -->
+            <tr v-for="position in positions" :key="position.id">
+              <td>
+                {{ position.symbol }}
+                <br />
+                <a
+                  class="btn btn-success btn-icon-split"
+                  href="#"
+                  data-toggle="modal"
+                  data-target="#editModal"
+                  v-on:click="showPosition(position)"
+                >
+                  <span class="icon text-white-50">
+                    <i class="fas fa-check"></i>
+                  </span>
+                  <span class="text">Edit</span>
+                </a>
+              </td>
+              <td>{{ position.amount }}</td>
+              <td>${{ Intl.NumberFormat("en-US").format(position.purchase_price) }}</td>
+              <td>${{ Intl.NumberFormat("en-US").format(position.price) }}</td>
+              <td>${{ Intl.NumberFormat("en-US").format(position.position_value) }}</td>
+              <td>${{ Intl.NumberFormat("en-US").format(position.pnl_dollars) }}</td>
+              <td>{{ position.pnl_percent }}%</td>
+              <td>{{ position.percent_change_24h }}%</td>
+            </tr>
+          </table>
         </div>
       </div>
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  props: {
+    positions: {
+      type: Array,
+      required: true,
+    },
+  },
+  data: () => ({}),
+};
+</script>
