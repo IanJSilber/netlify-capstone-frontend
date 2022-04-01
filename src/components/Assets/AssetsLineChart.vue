@@ -4,13 +4,13 @@ import { Line } from "vue-chartjs";
 export default {
   extends: Line,
   props: {
-    positions: {
-      type: Array,
+    currentAsset: {
+      type: Object,
       required: true,
     },
   },
   data: () => ({
-    totalValue: 0.0,
+    currentValue: 0.0,
     totalPnl24Hours: 0.0,
     totalPnl7Days: 0.0,
     totalPnl30Days: 0.0,
@@ -55,26 +55,26 @@ export default {
     },
   }),
   watch: {
-    positions: function (positions) {
-      console.log("this is watch", positions);
-      for (let i = 0; i < positions.length; ++i) {
-        this.totalValue += positions[i].position_value;
-        this.totalPnl7Days += positions[i].pnl_7_days;
-        this.totalPnl30Days += positions[i].pnl_30_days;
-      }
+    currentAsset: function (currentAsset) {
+      console.log("this is watch", currentAsset);
+      this.currentValue = currentAsset.price;
+      this.totalPnl7Days = currentAsset.price * currentAsset.pnl_7_days;
+      this.totalPnl30Days = currentAsset.price * currentAsset.pnl_30_days;
+      console.log("this is watch", this.totalPnl7Days);
+      console.log("this is watch", this.totalPnl7Days);
       if (this.totalPnl7Days > 0) {
-        this.totalPnl7Days = this.totalValue - this.totalPnl7Days;
+        this.totalPnl7Days = this.currentValue - this.totalPnl7Days;
       } else {
-        this.totalPnl7Days = this.totalValue + Math.abs(this.totalPnl7Days);
+        this.totalPnl7Days = this.currentValue + Math.abs(this.totalPnl7Days);
       }
       if (this.totalPnl30Days > 0) {
-        this.totalPnl30Days = this.totalValue - this.totalPnl30Days;
+        this.totalPnl30Days = this.currentValue - this.totalPnl30Days;
       } else {
-        this.totalPnl30Days = this.totalValue + Math.abs(this.totalPnl30Days);
+        this.totalPnl30Days = this.currentValue + Math.abs(this.totalPnl30Days);
       }
       this.chartData.datasets[0].data.push(this.totalPnl30Days);
       this.chartData.datasets[0].data.push(this.totalPnl7Days);
-      this.chartData.datasets[0].data.push(this.totalValue);
+      this.chartData.datasets[0].data.push(this.currentValue);
       this.renderChart(this.chartData, this.options);
     },
   },

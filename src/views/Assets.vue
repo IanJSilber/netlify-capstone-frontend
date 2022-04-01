@@ -24,7 +24,7 @@
                     <h3>{{ currentAsset.symbol }} Performance over 30 days</h3>
                   </div>
                   <div class="card-body">
-                    <watchlist-line-chart></watchlist-line-chart>
+                    <assets-line-chart :currentAsset="this.currentAsset"></assets-line-chart>
                   </div>
                 </div>
               </div>
@@ -146,11 +146,11 @@
 
 <script>
 import axios from "axios";
-import WatchlistLineChart from "@/components/Watchlists/WatchlistLineChart";
+import AssetLineChart from "../components/Assets/AssetsLineChart.vue";
 
 export default {
   components: {
-    WatchlistLineChart,
+    assetsLineChart: AssetLineChart,
   },
   data: () => ({
     newAssetParams: { symbol: "" },
