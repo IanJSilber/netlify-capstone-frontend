@@ -53,3 +53,26 @@
     </div>
   </div>
 </template>
+
+<script>
+import axios from "axios";
+
+export default {
+  data: () => ({
+    newPositionParams: { symbol: "", amount: 0.0 },
+    methods: {
+      createPosition: function () {
+        axios
+          .post("https://dry-temple-69566.herokuapp.com/positions", this.newPositionParams)
+          .then((response) => {
+            console.log(response.data);
+          })
+          .catch((error) => {
+            this.errors = error.response.data.errors;
+          });
+        this.reloadPage();
+      },
+    },
+  }),
+};
+</script>

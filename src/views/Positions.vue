@@ -36,67 +36,7 @@
           <!--  -->
           <!-- Beginning of Positions table -->
           <div class="row">
-            <div class="col-xl-8 col-lg-7">
-              <div class="card shadow mb-4">
-                <div class="card-header py-3">
-                  <div class="col-auto" href="#" data-toggle="modal" data-target="#createModal">
-                    <a class="btn btn-success btn-icon-split">
-                      <span class="icon text-white-50">
-                        <i class="fas fa-check"></i>
-                      </span>
-                      <span class="text">Add a new Position</span>
-                    </a>
-                  </div>
-                </div>
-                <!-- outline of actual table -->
-                <div class="card-body">
-                  <div class="table-responsive">
-                    <div v-if="$parent.isLoggedIn()">
-                      <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                        <thead>
-                          <tr>
-                            <th>Asset</th>
-                            <th>Quantity</th>
-                            <th>Purchase Price</th>
-                            <th>Price</th>
-                            <th>Current Value</th>
-                            <th>$ PnL</th>
-                            <th>PnL %</th>
-                            <th>24hr % Change</th>
-                          </tr>
-                        </thead>
-                        <!-- Assigning values for various cells -->
-                        <tr v-for="position in positions" :key="position.id">
-                          <td>
-                            {{ position.symbol }}
-                            <br />
-                            <a
-                              class="btn btn-success btn-icon-split"
-                              href="#"
-                              data-toggle="modal"
-                              data-target="#editModal"
-                              v-on:click="showPosition(position)"
-                            >
-                              <span class="icon text-white-50">
-                                <i class="fas fa-check"></i>
-                              </span>
-                              <span class="text">Edit</span>
-                            </a>
-                          </td>
-                          <td>{{ position.amount }}</td>
-                          <td>${{ Intl.NumberFormat("en-US").format(position.purchase_price) }}</td>
-                          <td>${{ Intl.NumberFormat("en-US").format(position.price) }}</td>
-                          <td>${{ Intl.NumberFormat("en-US").format(position.position_value) }}</td>
-                          <td>${{ Intl.NumberFormat("en-US").format(position.pnl_dollars) }}</td>
-                          <td>{{ position.pnl_percent }}%</td>
-                          <td>{{ position.percent_change_24h }}%</td>
-                        </tr>
-                      </table>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <positions-table :positions="this.positions"></positions-table>
             <!-- End of Positions table -->
             <!--  -->
             <!-- Beginning of Diversification Doughnut Chart from './components/DoughnutChart.vue' -->
@@ -121,61 +61,8 @@
           </div>
         </div>
         <!--  -->
-        <!-- Beginning of Create Position Modal -->
-        <div
-          class="modal fade"
-          id="createModal"
-          tabindex="-1"
-          role="dialog"
-          aria-labelledby="exampleModalLabel"
-          aria-hidden="true"
-        >
-          <div class="modal-dialog" role="document">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Create a new position!</h5>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                  <span aria-hidden="true">x</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                Input the symbol and amount below to add a position to your portfolio (leave purchase price blank for
-                current price)
-                <hr />
-                <form class="user">
-                  <div class="modal-body">
-                    <ul>
-                      <li v-for="error in errors" v-bind:key="error">{{ error }}</li>
-                    </ul>
-                    <div class="form-group row">
-                      <div class="col-12">
-                        <input
-                          type="text"
-                          class="form-control form-control-user"
-                          placeholder="Symbol"
-                          v-model="newPositionParams.symbol"
-                        />
-                      </div>
-                    </div>
-                    <div class="form-group">
-                      <input
-                        type="text"
-                        class="form-control form-control-user"
-                        placeholder="Amount"
-                        v-model="newPositionParams.amount"
-                      />
-                    </div>
-                  </div>
-                  <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-                    <button class="btn btn-primary" data-dismiss="modal" v-on:click="createPosition()">Add</button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- End of Create Position Modal -->
+        <!-- Create Position Modal from ./components/Positions/CreateModal.vue-->
+        <create-modal></create-modal>
         <!-- edit modal from ./components/Positions/EditModal.vue -->
         <edit-modal :currentPosition="currentPosition"></edit-modal>
       </div>
@@ -191,6 +78,8 @@ import LineChart from "@/components/Positions/LineChart";
 import DoughnutChart from "@/components/Positions/DoughnutChart";
 import StatusHeader from "@/components/Positions/StatusHeader";
 import EditModal from "@/components/Positions/EditModal";
+import CreateModal from "@/components/Positions/CreateModal";
+import PositionsTable from "@/components/Positions/PositionsTable.vue";
 
 export default {
   data: () => ({
@@ -198,7 +87,6 @@ export default {
     errors: [],
     user: {},
     currentPosition: {},
-    newPositionParams: { symbol: "", amount: 0.0 },
     totalValue: 0,
     totalPnl: 0,
     lambo: 517770,
@@ -207,10 +95,12 @@ export default {
     totalPnl30Days: 0.0,
   }),
   components: {
+    createModal: CreateModal,
     editModal: EditModal,
     statusHeader: StatusHeader,
     lineChart: LineChart,
     doughnutChart: DoughnutChart,
+    positionsTable: PositionsTable,
   },
   mounted: function () {
     axios
@@ -236,25 +126,6 @@ export default {
     showPosition: function (position) {
       console.log(position);
       this.currentPosition = position;
-    },
-    createPosition: function () {
-      axios
-        .post("https://dry-temple-69566.herokuapp.com/positions", this.newPositionParams)
-        .then((response) => {
-          console.log(response.data);
-        })
-        .catch((error) => {
-          this.errors = error.response.data.errors;
-        });
-      this.reloadPage();
-    },
-    destroyPosition: function (position) {
-      axios.delete("https://dry-temple-69566.herokuapp.com/positions/" + position.id).then((response) => {
-        console.log("Sucess!", response.data);
-        var index = this.positions.indexOf(position);
-        this.positions.splice(index, 1);
-      });
-      this.reloadPage();
     },
   },
 };
