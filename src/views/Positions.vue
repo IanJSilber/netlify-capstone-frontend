@@ -8,7 +8,7 @@
           <!-- Begin Page Content -->
           <div class="container-fluid">
             <!-- status header found ../components/Positions/StatusHeader.vue -->
-            <status-header :totalPnl="this.totalPnl" :lamboPnL="this.lamboPnL"></status-header>
+            <statusHeader :totalPnl="this.totalPnl" :lamboPnL="this.lamboPnL" />
             <!-- Beginning of Line Chart from '../components/Positions/LineChart.vue' -->
             <div class="row">
               <div class="col-xl-12 col-md-6 mb-4">
@@ -25,7 +25,7 @@
                   <div class="card-body">
                     <h3>Portfolio perfomance over the past 30 days</h3>
 
-                    <line-chart :positions="this.positions"></line-chart>
+                    <lineChart :positions="this.positions" />
 
                     <h4 v-if="this.totalPnl < 0">Yikes, looks rough</h4>
                     <h4 v-if="this.totalPnl >= 0">Nice!</h4>
@@ -37,7 +37,7 @@
             <!--  -->
             <div class="row">
               <!-- Positions table from ../components/Positions/PositionsTable.vue-->
-              <positions-table :positions="this.positions"></positions-table>
+              <positionsTable :positions="this.positions" />
               <!-- Beginning of Diversification Doughnut Chart from '../components/DoughnutChart.vue' -->
               <div class="col-xl-4 col-lg-5">
                 <div class="card shadow mb-4">
@@ -49,7 +49,7 @@
                   <div class="card-body">
                     <h3>Diversification</h3>
 
-                    <doughnut-chart :positions="this.positions" :totalValue="totalValue"></doughnut-chart>
+                    <doughnutChart :positions="this.positions" :totalValue="totalValue" />
 
                     <hr />
                     Please tell me you're at least well diversified. you are right? right?
@@ -61,9 +61,9 @@
           </div>
           <!--  -->
           <!-- Create Position Modal from ../components/Positions/CreateModal.vue-->
-          <create-modal></create-modal>
+          <createModal/>
           <!-- edit modal from ../components/Positions/EditModal.vue -->
-          <edit-modal :currentPosition="currentPosition"></edit-modal>
+          <editModal :currentPosition="currentPosition" />
         </div>
         <!-- /.container-fluid -->
       </div>

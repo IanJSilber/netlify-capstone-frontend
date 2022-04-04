@@ -10,11 +10,11 @@
           <hr />
           <!--  -->
           <!-- Top 3 by volatility @/components/Home/TopThreeMovers.vue-->
-          <top-three-movers :sortedCoins="sortedCoins"></top-three-movers>
+          <topThreeMovers :sortedCoins="sortedCoins" />
           <!-- Top 15 cryptos chart @/components/Home/TopFifteenMc.vue-->
-          <top-fifteen-mc :coins="coins"></top-fifteen-mc>
+          <topFifteenMc :coins="coins" />
           <!-- Top 5 crypto news stories @/components/Home/News.vue-->
-          <news :news="news"></news>
+          <news :news="news" />
           <!--  -->
         </div>
       </div>
