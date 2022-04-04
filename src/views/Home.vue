@@ -11,57 +11,10 @@
           <!--  -->
           <!-- Top 3 by volatility @/components/Home/TopThreeMovers.vue-->
           <top-three-movers :sortedCoins="sortedCoins"></top-three-movers>
-          <!-- Top 15 cryptos chart -->
-          <h1 class="h3 mb-2 text-gray-800">Top 15 cryptocurrencies</h1>
-          <p class="mb-4">Top ranked cryptocurrencies by market capitalization.</p>
-
-          <div class="card shadow mb-4">
-            <div class="card-body">
-              <div class="table-responsive">
-                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
-                  <thead>
-                    <tr>
-                      <th>Rank</th>
-                      <th>Name</th>
-                      <th>Position Symbol</th>
-                      <th>Price</th>
-                      <th>24hr % change</th>
-                      <th>7D % change</th>
-                      <th>30D % change</th>
-                    </tr>
-                  </thead>
-
-                  <tr v-for="coin in coins" :key="coin.id">
-                    <td>{{ coin.rank }}</td>
-                    <td>{{ coin.name }}</td>
-                    <td>{{ coin.symbol }}</td>
-                    <td>${{ Intl.NumberFormat("en-US").format(coin.price) }}</td>
-                    <td>{{ coin.percent_change_24h }}%</td>
-                    <td>{{ coin.percent_change_7d }}%</td>
-                    <td>{{ coin.percent_change_30d }}%</td>
-                  </tr>
-                </table>
-              </div>
-            </div>
-          </div>
-          <!-- end of top 15 chart -->
-          <!--  -->
-          <!-- Top 5 news stories related to crypto -->
-          <h1 class="h3 mb-2 text-gray-800">News</h1>
-          <p class="mb-4">Catch up on the latest important news.</p>
-          <div v-for="news in news" :key="news.id">
-            <div class="card shadow mb-4">
-              <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">
-                  <a target="_blank" v-bind:href="`${news.url}`">{{ news.title }}</a>
-                </h6>
-              </div>
-              <div class="card-body">
-                <p>{{ news.description }}</p>
-              </div>
-            </div>
-          </div>
-          <!-- end of news -->
+          <!-- Top 15 cryptos chart @/components/Home/TopFifteenMc.vue-->
+          <top-fifteen-mc :coins="coins"></top-fifteen-mc>
+          <!-- Top 5 crypto news stories @/components/Home/News.vue-->
+          <news :news="news"></news>
           <!--  -->
         </div>
       </div>
@@ -72,6 +25,9 @@
 <script>
 import axios from "axios";
 import TopThreeMovers from "@/components/Home/TopThreeMovers.vue"
+import TopFifteenMc from "@/components/Home/TopFifteenMc.vue"
+import News from "@/components/Home/News.vue"
+
 
 export default {
   data: () => ({
@@ -83,12 +39,13 @@ export default {
     coinThree: { percent_change_24h: 0 },
   }),
   components: {
-    topThreeMovers: TopThreeMovers
+    topThreeMovers: TopThreeMovers,
+    topFifteenMc: TopFifteenMc,
+    news: News,
   },
   created: function () {
     this.indexNews();
     this.indexTopCoins();
-    // this.sortCoins();
   },
   methods: {
     indexNews() {
