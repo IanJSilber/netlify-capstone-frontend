@@ -4,62 +4,13 @@
     <div id="content">
       <div class="home">
         <div class="container-fluid">
-          <!--  -->
           <!-- Header -->
           <h1 class="h1 mb-2 text-gray-800">Dashboard</h1>
           <h1 class="h6 mb-2 text-gray-800">Whats going on in the world of crypto</h1>
-          <!-- End Header -->
-          <!--  -->
           <hr />
           <!--  -->
-          <!-- Top 3 by volatility -->
-          <h1 class="h3 mb-2 text-gray-800">Top 3 Movers</h1>
-          <div class="row">
-            <div class="col-xl-4 col-lg-5">
-              <div class="card shadow mb-4">
-                <div class="card-header py-3" style="background-color: #ffd700">
-                  <h6 class="m-0 font-weight-bold" style="color: white">1st Mover</h6>
-                </div>
-                <div class="card-body">
-                  <h3>{{ this.sortedCoins[0].name }}</h3>
-                  <h3>{{ this.sortedCoins[0].percent_change_24h }}%</h3>
-                  <hr />
-                  <p>rank: {{ this.sortedCoins[0].rank }}</p>
-                  <p>price: ${{ Intl.NumberFormat("en-US").format(this.sortedCoins[0].price) }}</p>
-                </div>
-              </div>
-            </div>
-            <div class="col-xl-4 col-lg-5">
-              <div class="card shadow mb-4">
-                <div class="card-header py-3" style="background-color: #c0c0c0">
-                  <h6 class="m-0 font-weight-bold" style="color: white">2nd Mover</h6>
-                </div>
-                <div class="card-body">
-                  <h3>{{ this.sortedCoins[1].name }}</h3>
-                  <h3>{{ this.sortedCoins[1].percent_change_24h }}%</h3>
-                  <hr />
-                  <p>rank: {{ this.sortedCoins[1].rank }}</p>
-                  <p>price: ${{ Intl.NumberFormat("en-US").format(this.sortedCoins[1].price) }}</p>
-                </div>
-              </div>
-            </div>
-            <div class="col-xl-4 col-lg-5">
-              <div class="card shadow mb-4">
-                <div class="card-header py-3" style="background-color: #cd7f32">
-                  <h6 class="m-0 font-weight-bold" style="color: white">3rd Mover</h6>
-                </div>
-                <div class="card-body">
-                  <h3>{{ this.sortedCoins[2].name }}</h3>
-                  <h3>{{ this.sortedCoins[2].percent_change_24h }}%</h3>
-                  <hr />
-                  <p>rank: {{ this.sortedCoins[2].rank }}</p>
-                  <p>price: ${{ Intl.NumberFormat("en-US").format(this.sortedCoins[2].price) }}</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          <!-- End of top 3 volatility  -->
-          <!--  -->
+          <!-- Top 3 by volatility @/components/Home/TopThreeMovers.vue-->
+          <top-three-movers :sortedCoins="sortedCoins"></top-three-movers>
           <!-- Top 15 cryptos chart -->
           <h1 class="h3 mb-2 text-gray-800">Top 15 cryptocurrencies</h1>
           <p class="mb-4">Top ranked cryptocurrencies by market capitalization.</p>
@@ -85,9 +36,9 @@
                     <td>{{ coin.name }}</td>
                     <td>{{ coin.symbol }}</td>
                     <td>${{ Intl.NumberFormat("en-US").format(coin.price) }}</td>
-                    <td>%{{ coin.percent_change_24h }}</td>
-                    <td>%{{ coin.percent_change_7d }}</td>
-                    <td>%{{ coin.percent_change_30d }}</td>
+                    <td>{{ coin.percent_change_24h }}%</td>
+                    <td>{{ coin.percent_change_7d }}%</td>
+                    <td>{{ coin.percent_change_30d }}%</td>
                   </tr>
                 </table>
               </div>
@@ -120,6 +71,7 @@
 
 <script>
 import axios from "axios";
+import TopThreeMovers from "@/components/Home/TopThreeMovers.vue"
 
 export default {
   data: () => ({
@@ -130,6 +82,9 @@ export default {
     coinTwo: { percent_change_24h: 0 },
     coinThree: { percent_change_24h: 0 },
   }),
+  components: {
+    topThreeMovers: TopThreeMovers
+  },
   created: function () {
     this.indexNews();
     this.indexTopCoins();
