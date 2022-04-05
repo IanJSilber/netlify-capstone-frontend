@@ -21,3 +21,7 @@ pnpm-debug.log*
 *.njsproj
 *.sln
 *.sw?
+
+# file for messing around and experimenting
+
+scratchPaper.js
