@@ -63,7 +63,7 @@
           <!-- Create Position Modal from ../components/Positions/CreateModal.vue-->
           <createModal/>
           <!-- edit modal from ../components/Positions/EditModal.vue -->
-          <editModal :currentPosition="currentPosition" />
+          <editModal :currentPosition="currentPosition" @updatedPositions="reloadPage()"/>
         </div>
         <!-- /.container-fluid -->
       </div>

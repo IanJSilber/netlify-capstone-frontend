@@ -32,14 +32,14 @@
                 <button
                   class="btn btn-danger btn-icon-split"
                   style="margin-left: 10px; padding: 5px"
-                  v-on:click="destroyAsset(asset)"
+                  v-on:click="this.asset=asset"
                 >
                   Remove
                 </button>
                 <button
                   class="btn btn-success btn-icon-split"
                   style="margin-left: 10px; padding: 5px"
-                  v-on:click="showAsset(asset)"
+                  v-on:click="this.asset=asset"
                 >
                   Chart
                 </button>
@@ -57,28 +57,21 @@
 </template>
 
 <script>
-import axios from 'axios';
 export default {
+  data: () => ({
+    asset: { symbol: "" }
+  }),
   props: {
     assets: {
       type: Array,
       required: true
-    }
+    },
+    showAsset: { type: Function },
+    destroyAsset: { type: Function }
   },
-  data: () => ({
-    methods: {
-      showAsset: function (asset) {
-        console.log(asset);
-        this.currentAsset = asset;
-      },
-      destroyAsset: function (asset) {
-        axios.delete("https://dry-temple-69566.herokuapp.com/assets/" + asset.id).then((response) => {
-          console.log("Sucess!", response.data);
-          var index = this.assets.indexOf(asset);
-          this.assets.splice(index, 1);
-        });
-      },
-    }
-  })
+  mounted() {
+    this.showAsset(this.asset);
+    this.destroyAsset(this.asset);
+  }
 }
 </script>

@@ -39,7 +39,7 @@
               </div>
             </div>
             <!-- watchlistTable at @/components/Assets/WatchlistTable.vue -->
-            <watchlistTable :assets="assets" />
+            <watchlistTable :assets="assets" :showAsset="showAsset" :destroyAsset="destroyAsset"/>
             <!-- createmodal at @/components/Assets/CreateModal.vue -->
             <createModal />
           </div>
@@ -87,7 +87,17 @@ export default {
           this.errors = error.response.data.errors;
         });
     },
-
+    showAsset: function(asset) {
+      console.log(asset);
+      this.currentAsset = asset;
+    },
+    destroyAsset: function(asset) {
+      axios.delete("https://dry-temple-69566.herokuapp.com/assets/" + asset.id).then((response) => {
+        console.log("Sucess!", response.data);
+        var index = this.assets.indexOf(asset);
+        this.assets.splice(index, 1);
+      });
+    },
   },
 };
 </script>
