@@ -39,7 +39,7 @@
               </div>
             </div>
             <!-- watchlistTable at @/components/Assets/WatchlistTable.vue -->
-            <watchlistTable :assets="assets" :showAsset="showAsset" :destroyAsset="destroyAsset"/>
+            <watchlistTable :assets="assets" />
             <!-- createmodal at @/components/Assets/CreateModal.vue -->
             <createModal />
           </div>
@@ -53,7 +53,7 @@
 import axios from "axios";
 import AssetsLineChart from "../components/Assets/AssetsLineChart.vue";
 import CreateModal from "../components/Assets/CreateModal.vue";
-import WatchlistTable from "../components/Assets/WatchlistTable.vue";
+import WatchlistTable from "../components/Assets/WatchlistTable/WatchlistTable.vue";
 
 
 
