@@ -64,7 +64,7 @@ import WatchlistTable from "../components/Assets/WatchlistTable/WatchlistTable.v
 export default {
   data: () => ({
     newAssetParams: { symbol: "" },
-    currentAsset: false,
+    currentAsset: {},
     assets: [],
     errors: [],
   }),

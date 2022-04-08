@@ -55,24 +55,24 @@ export default {
   }),
   watch: {
     currentAsset: function (currentAsset) {
-      this.chartData.datasets[0].data = [];
       console.log("this is watch", currentAsset);
       console.log("this is price", currentAsset.percent_change_7d);
       this.currentValue = currentAsset.price;
       this.totalPnl7Days = currentAsset.price * (currentAsset.percent_change_7d / 100);
-      this.totalPnl3Days = currentAsset.price * (currentAsset.percent_change_30d / 100);
+      this.totalPnl30Days = currentAsset.price * (currentAsset.percent_change_30d / 100);
       console.log(this.totalPnl7Days);
-      if (this.totalPnl7Days < 0) {
+      // boring conditional percentage gain and loss math dont worry about it.
+      if (this.totalPnl7Days > 0) {
         this.totalPnl7Days = this.currentValue - this.totalPnl7Days;
       } else {
         this.totalPnl7Days = this.currentValue + Math.abs(this.totalPnl7Days);
       }
-      if (this.totalPnl30Days < 0) {
+      if (this.totalPnl30Days > 0) {
         this.totalPnl30Days = this.currentValue - this.totalPnl30Days;
       } else {
         this.totalPnl30Days = this.currentValue + Math.abs(this.totalPnl30Days);
       }
-      this.chartData.datasets.data = [];
+      this.chartData.datasets[0].data = []; // reset chart data before pushing new data
       this.chartData.datasets[0].data.push(this.totalPnl30Days);
       this.chartData.datasets[0].data.push(this.totalPnl7Days);
       this.chartData.datasets[0].data.push(this.currentValue);
