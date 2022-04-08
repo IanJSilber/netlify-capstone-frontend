@@ -39,7 +39,11 @@
               </div>
             </div>
             <!-- watchlistTable at @/components/Assets/WatchlistTable.vue -->
-            <watchlistTable :assets="assets" />
+            <watchlistTable
+              :assets="assets"
+              @delete="destroyAsset"
+              @show="showAsset"
+            />
             <!-- createmodal at @/components/Assets/CreateModal.vue -->
             <createModal />
           </div>

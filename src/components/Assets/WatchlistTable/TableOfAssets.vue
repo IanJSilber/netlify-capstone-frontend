@@ -5,14 +5,14 @@
       <button
         class="btn btn-danger btn-icon-split"
         style="margin-left: 10px; padding: 5px"
-        v-on:click="deleteAsset(asset)"
+        v-on:click="onDeleteClick(asset)"
       >
-        Remove
+        Delete
       </button>
       <button
         class="btn btn-success btn-icon-split"
         style="margin-left: 10px; padding: 5px"
-        v-on:click="showAsset(asset)"
+        v-on:click="onShowClick(asset)"
       >
         Chart
       </button>
@@ -34,12 +34,12 @@ export default {
     }
   },
   methods: {
-    deleteAsset: function() {
-      console.log(this.asset)
+    onDeleteClick: function() {
+      // console.log(this.asset)
       this.$emit('delete', this.asset);
     },
-    showAsset: function() {
-      console.log(this.asset)
+    onShowClick: function() {
+      // console.log(this.asset)
       this.$emit('show', this.asset);
     },
   }

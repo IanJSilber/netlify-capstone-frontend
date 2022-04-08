@@ -11,7 +11,6 @@ export default {
   },
   data: () => ({
     currentValue: 0.0,
-    totalPnl24Hours: 0.0,
     totalPnl7Days: 0.0,
     totalPnl30Days: 0.0,
     chartData: {
@@ -56,6 +55,7 @@ export default {
   }),
   watch: {
     currentAsset: function (currentAsset) {
+      this.chartData.datasets[0].data = [];
       console.log("this is watch", currentAsset);
       console.log("this is price", currentAsset.percent_change_7d);
       this.currentValue = currentAsset.price;

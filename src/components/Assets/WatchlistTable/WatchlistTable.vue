@@ -26,7 +26,13 @@
               </tr>
             </thead>
 
-            <tableOfAssets v-for="asset in assets" :key="asset.id" :asset="asset" />
+            <tableOfAssets
+              v-for="asset in assets"
+              :key="asset.id"
+              :asset="asset"
+              @delete="deleteAsset"
+              @show="showAsset"
+            />
           </table>
       </div>
     </div>
@@ -44,6 +50,14 @@ export default {
   },
   components: {
     tableOfAssets: TableOfAssets
+  },
+  methods: {
+    deleteAsset: function(asset) {
+      this.$emit('delete', asset);
+    },
+    showAsset: function(asset) {
+      this.$emit('show', asset);
+    }
   }
 }
 </script>
