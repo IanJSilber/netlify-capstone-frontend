@@ -56,7 +56,6 @@ export default {
   }),
   watch: {
     positions: function (positions) {
-      console.log("this is watch", positions);
       for (let i = 0; i < positions.length; ++i) {
         this.totalValue += positions[i].position_value;
         this.totalPnl7Days += positions[i].pnl_7_days;

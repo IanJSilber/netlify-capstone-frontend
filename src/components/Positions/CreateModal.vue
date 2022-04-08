@@ -45,7 +45,11 @@
             </div>
             <div class="modal-footer">
               <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-              <button class="btn btn-primary" data-dismiss="modal" v-on:click="createPosition()">Add</button>
+              <button
+                class="btn btn-primary" data-dismiss="modal"
+                v-on:click="onCreateClick(newPositionParams)"
+              >Add
+              </button>
             </div>
           </form>
         </div>
@@ -55,24 +59,20 @@
 </template>
 
 <script>
-import axios from "axios";
-
 export default {
+  props: {
+    errors: {
+      type: Array,
+    }
+  },
   data: () => ({
     newPositionParams: { symbol: "", amount: 0.0 },
-    methods: {
-      createPosition: function () {
-        axios
-          .post("https://dry-temple-69566.herokuapp.com/positions", this.newPositionParams)
-          .then((response) => {
-            console.log(response.data);
-          })
-          .catch((error) => {
-            this.errors = error.response.data.errors;
-          });
-        this.reloadPage();
-      },
-    },
   }),
+  methods: {
+    onCreateClick: function(newPositionParams) {
+      console.log(newPositionParams)
+      this.$emit("create", newPositionParams)
+    }
+  },
 };
 </script>

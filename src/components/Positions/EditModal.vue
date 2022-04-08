@@ -61,10 +61,10 @@ export default {
       type: Object,
       required: true,
     },
+    errors: {
+      type: Array
+    }
   },
-  date: () => ({
-    errors: [],
-  }),
   methods: {
     updatePosition: function () {
       axios

@@ -45,7 +45,7 @@
               @show="showAsset"
             />
             <!-- createmodal at @/components/Assets/CreateModal.vue -->
-            <createModal />
+            <createModal :errors="errors" @create="createAsset"/>
           </div>
         </div>
       </div>
@@ -90,6 +90,17 @@ export default {
         .catch((error) => {
           this.errors = error.response.data.errors;
         });
+    },
+    createAsset: function (newAssetParams) {
+      axios
+        .post("https://dry-temple-69566.herokuapp.com/assets", newAssetParams)
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((error) => {
+          this.errors = error.response.data.errors;
+        });
+      this.reloadPage();
     },
     showAsset: function(asset) {
       console.log(asset);

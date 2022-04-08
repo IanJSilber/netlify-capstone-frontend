@@ -61,9 +61,9 @@
           </div>
           <!--  -->
           <!-- Create Position Modal from ../components/Positions/CreateModal.vue-->
-          <createModal/>
+          <createModal :errors="errors" @create="createPosition" />
           <!-- edit modal from ../components/Positions/EditModal.vue -->
-          <editModal :currentPosition="currentPosition" @updatedPositions="reloadPage()"/>
+          <editModal :errors="errors" :currentPosition="currentPosition" />
         </div>
         <!-- /.container-fluid -->
       </div>
@@ -126,6 +126,17 @@ export default {
     showPosition: function (position) {
       console.log(position);
       this.currentPosition = position;
+    },
+    createPosition: function(newPositionParams) {
+      axios
+        .post("https://dry-temple-69566.herokuapp.com/positions", newPositionParams)
+        .then((response) => {
+          console.log(response.data);
+        })
+        .catch((error) => {
+          this.errors = error.response.data.errors;
+        });
+      this.reloadPage();
     },
   },
 };

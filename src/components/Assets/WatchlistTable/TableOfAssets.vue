@@ -5,14 +5,14 @@
       <button
         class="btn btn-danger btn-icon-split"
         style="margin-left: 10px; padding: 5px"
-        v-on:click="onDeleteClick(asset)"
+        v-on:click="onDeleteClick()"
       >
         Delete
       </button>
       <button
         class="btn btn-success btn-icon-split"
         style="margin-left: 10px; padding: 5px"
-        v-on:click="onShowClick(asset)"
+        v-on:click="onShowClick()"
       >
         Chart
       </button>
