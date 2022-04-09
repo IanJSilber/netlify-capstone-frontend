@@ -11,8 +11,15 @@
       <div class="modal-dialog" role="document">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Edit your position!</h5>
-            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+            <h5 class="modal-title" id="exampleModalLabel">
+              Edit your position!
+            </h5>
+            <button
+              class="close"
+              type="button"
+              data-dismiss="modal"
+              aria-label="Close"
+            >
               <span aria-hidden="true">x</span>
             </button>
           </div>
@@ -20,10 +27,16 @@
             <form class="user">
               <div class="modal-body">
                 <ul>
-                  <li v-for="error in errors" v-bind:key="error">{{ error }}</li>
+                  <li v-for="error in errors" v-bind:key="error">
+                    {{ error }}
+                  </li>
                 </ul>
                 <div class="form-group">
-                  <input type="text" class="form-control form-control-user" v-model="currentPosition.amount" />
+                  <input
+                    type="text"
+                    class="form-control form-control-user"
+                    v-model="currentPosition.amount"
+                  />
                 </div>
               </div>
               <div class="modal-footer">
@@ -31,7 +44,7 @@
                   class="btn btn-danger"
                   type="button"
                   data-dismiss="modal"
-                  v-on:click="destroyPosition(currentPosition)"
+                  v-on:click="onDeleteClick(currentPosition)"
                 >
                   Delete
                 </button>
@@ -43,7 +56,9 @@
                 >
                   Update
                 </button>
-                <button class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button class="btn btn-secondary" data-dismiss="modal">
+                  Close
+                </button>
               </div>
             </form>
           </div>
@@ -54,37 +69,23 @@
 </template>
 
 <script>
-import axios from "axios";
 export default {
   props: {
     currentPosition: {
       type: Object,
-      required: true,
+      required: true
     },
     errors: {
       type: Array
     }
   },
   methods: {
-    updatePosition: function () {
-      axios
-        .patch("https://dry-temple-69566.herokuapp.com/positions/" + this.currentPosition.id, this.currentPosition)
-        .then((response) => {
-          console.log("success", response.data);
-          this.$emit("updatedPositions");
-        })
-        .catch((error) => {
-          this.errors = error.response.data.errors;
-        });
+    onUpdateClick: function (currentPosition) {
+      this.$emit("update", currentPosition);
     },
-    destroyPosition: function (position) {
-      axios.delete("https://dry-temple-69566.herokuapp.com/positions/" + position.id).then((response) => {
-        console.log("Sucess!", response.data);
-        var index = this.positions.indexOf(position);
-        this.positions.splice(index, 1);
-        this.$emit("updatedPositions");
-      });
-    },
-  },
+    onDeleteClick: function (currentPosition) {
+      this.$emit("delete", currentPosition);
+    }
+  }
 };
 </script>

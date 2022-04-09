@@ -37,7 +37,7 @@
                   href="#"
                   data-toggle="modal"
                   data-target="#editModal"
-                  v-on:click="showPosition(position)"
+                  v-on:click="onShowClick(position)"
                 >
                   <span class="icon text-white-50">
                     <i class="fas fa-check"></i>
@@ -68,5 +68,10 @@ export default {
       required: true,
     },
   },
+  methods: {
+    onShowClick: function(position) {
+      this.$emit("show", position)
+    }
+  }
 };
 </script>
