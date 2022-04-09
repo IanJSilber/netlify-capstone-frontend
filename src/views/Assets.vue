@@ -17,12 +17,19 @@
                       <h3>Pick an asset to chart!</h3>
                     </div>
                     <div class="card-body">
-                      <h1 class="h3 mb-2 text-gray-800" style="text-align: center">Nothing to see here...</h1>
+                      <h1
+                        class="h3 mb-2 text-gray-800"
+                        style="text-align: center"
+                      >
+                        Nothing to see here...
+                      </h1>
                     </div>
                   </div>
                   <div v-if="currentAsset">
                     <div class="card-header py-3">
-                      <h3>{{ currentAsset.symbol }} Performance over 30 days</h3>
+                      <h3>
+                        {{ currentAsset.symbol }} Performance over 30 days
+                      </h3>
                     </div>
                     <div class="card-body">
                       <assetsLineChart :currentAsset="this.currentAsset" />
@@ -33,8 +40,12 @@
             </div>
             <div class="card shadow mb-4">
               <div class="card-header py-3">
-                <div class="text-m font-weight-bold text-primary text-uppercase mb-1">
-                  <h4 class="m-0 font-weight-bold text-primary">{{ $parent.currentUserName }}'s Watchlist</h4>
+                <div
+                  class="text-m font-weight-bold text-primary text-uppercase mb-1"
+                >
+                  <h4 class="m-0 font-weight-bold text-primary">
+                    {{ $parent.currentUserName }}'s Watchlist
+                  </h4>
                 </div>
               </div>
             </div>
@@ -45,7 +56,7 @@
               @show="showAsset"
             />
             <!-- createmodal at @/components/Assets/CreateModal.vue -->
-            <createModal :errors="errors" @create="createAsset"/>
+            <createModal :errors="errors" @create="createAsset" />
           </div>
         </div>
       </div>
@@ -59,14 +70,12 @@ import AssetsLineChart from "../components/Assets/AssetsLineChart.vue";
 import CreateModal from "../components/Assets/CreateModal.vue";
 import WatchlistTable from "../components/Assets/WatchlistTable/WatchlistTable.vue";
 
-
-
 export default {
   data: () => ({
     newAssetParams: { symbol: "" },
     currentAsset: {},
     assets: [],
-    errors: [],
+    errors: []
   }),
   components: {
     assetsLineChart: AssetsLineChart,
@@ -85,6 +94,7 @@ export default {
         .get("https://dry-temple-69566.herokuapp.com/assets")
         .then((response) => {
           this.assets = response.data;
+          this.currentAsset = response.data[0];
           console.log("success -assets!", response.data);
         })
         .catch((error) => {
@@ -102,17 +112,19 @@ export default {
         });
       this.reloadPage();
     },
-    showAsset: function(asset) {
+    showAsset: function (asset) {
       console.log(asset);
       this.currentAsset = asset;
     },
-    destroyAsset: function(asset) {
-      axios.delete("https://dry-temple-69566.herokuapp.com/assets/" + asset.id).then((response) => {
-        console.log("Sucess!", response.data);
-        var index = this.assets.indexOf(asset);
-        this.assets.splice(index, 1);
-      });
-    },
-  },
+    destroyAsset: function (asset) {
+      axios
+        .delete("https://dry-temple-69566.herokuapp.com/assets/" + asset.id)
+        .then((response) => {
+          console.log("Sucess!", response.data);
+          var index = this.assets.indexOf(asset);
+          this.assets.splice(index, 1);
+        });
+    }
+  }
 };
 </script>
